@@ -1,4 +1,4 @@
-namespace Maksby.Data.Models;
+namespace Maksby.Data.Models.Employee;
 
 public class Salary
 {
@@ -10,4 +10,8 @@ public class Salary
       public double OverTime { get; set; }
       public double Deduction { get; set; }
       public double NetSalary { get; set; }
+
+      public Employee? Employee { get; private set; }
+      public Summary? Summary { get; private set; }
 }
+

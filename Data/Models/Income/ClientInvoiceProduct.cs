@@ -11,5 +11,8 @@ public class ClientInvoiceProduct
 
       public double TotalAmount => Quantity * PricePerKilo;
 
+      public Product? Product { get; private set; }
+      public ClientInvoice? ClientInvoice { get; private set; }
+
 
 }

@@ -14,5 +14,5 @@ public class User
       public DateTime UpdatedDate { get; set; }
       public DateTime DeletedDate { get; set; }
 
-
+      public Summary? Summary { get; private set; }
 }

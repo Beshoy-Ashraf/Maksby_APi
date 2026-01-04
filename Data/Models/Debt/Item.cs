@@ -1,3 +1,5 @@
+using Maksby.Data.Models.batch;
+
 namespace Maksby.Data.Models.Debt;
 
 public class Item
@@ -9,5 +11,7 @@ public class Item
       public DateTime UpdatedDate { get; set; }
       public DateTime DeletedDate { get; set; }
 
+      public ICollection<DebtInvoiceItem>? DebtInvoiceItem { get; set; }
+      public ICollection<BatchItem>? BatchItems { get; set; }
 
 }

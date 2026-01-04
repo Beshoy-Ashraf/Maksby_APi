@@ -11,4 +11,10 @@ public class DebtInvoice
       public DateTime Date { get; set; }
       public double Amount { get; set; }
 
+
+      public Supplier? Supplier { get; private set; }
+      public Summary? Summary { get; private set; }
+
+      public ICollection<DebtInvoiceItem>? DebtInvoiceItems { get; set; }
+
 }

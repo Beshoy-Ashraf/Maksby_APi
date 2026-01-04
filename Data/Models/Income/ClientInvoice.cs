@@ -9,4 +9,12 @@ public class ClientInvoice
 
       public double Amount { get; set; }
       public required string Status { get; set; }
+
+      public ICollection<ClientInvoiceProduct>? ClientInvoiceProducts { get; set; }
+
+      public ICollection<ClientTransaction>? ClientTransactions { get; set; }
+
+      public Summary? Summary { get; private set; }
+
+      public Client? Client { get; private set; }
 }

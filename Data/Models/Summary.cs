@@ -1,3 +1,7 @@
+using Maksby.Data.Models.Debt;
+using Maksby.Data.Models.Employee;
+using Maksby.Data.Models.Income;
+
 namespace Maksby.Data.Models;
 
 public class Summary
@@ -10,8 +14,15 @@ public class Summary
       public double EtimatedIncome { get; set; }
       public double ActualDebt { get; set; }
       public double EtimatedDebt { get; set; }
-      public double Salaries { get; set; }
-      public double Expenses { get; set; }
+      public double TotalSalaries { get; set; }
+      public double TotalExpenses { get; set; }
       public double Revenue { get; set; }
 
+      public ICollection<Salary>? Salaries { get; set; }
+      public ICollection<Expense>? Expenses { get; set; }
+      public ICollection<DebtInvoice>? DebtInvoices { get; set; }
+      public ICollection<ClientInvoice>? ClientInvoices { get; set; }
+
+      public User.User? User { get; set; }
 }
+

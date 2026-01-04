@@ -132,3 +132,4 @@
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.pdb
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.genruntimeconfig.cache
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/ref/Maksby.dll
+/home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.sourcelink.json

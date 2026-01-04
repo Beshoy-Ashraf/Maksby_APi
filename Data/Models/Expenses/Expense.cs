@@ -16,5 +16,5 @@ public class Expense
       public DateTime UpdatedDate { get; set; }
       public DateTime DeletedDate { get; set; }
 
-
+      public Summary? Summary { get; private set; }
 }

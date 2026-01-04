@@ -1,3 +1,5 @@
+using Maksby.Data.Models.Income;
+
 namespace Maksby.Data.Models.Debt;
 
 public class DebtInvoiceItem
@@ -9,5 +11,11 @@ public class DebtInvoiceItem
       public double PricePerKilo { get; set; }
       public double Quantity { get; set; }
       public double Amount => Quantity * PricePerKilo;
+
+      public DebtInvoice? DebtInvoice { get; private set; }
+
+      public Item? Items { get; set; }
+
+
 
 }
