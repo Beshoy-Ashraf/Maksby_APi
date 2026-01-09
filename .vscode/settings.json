@@ -11,5 +11,8 @@
                   "name": "postgres",
                   "database": "MaksbyAPI"
             }
+      ],
+      "cSpell.words": [
+            "Maksby"
       ]
 }

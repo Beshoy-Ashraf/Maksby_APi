@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Maksby.Data.Config.EmployeeConfigration;
 using Maksby.Data.Models.Employee;
 using Maksby.Data.Models;
 using Maksby.Data.Models.User;
@@ -17,7 +16,6 @@ public class AppDBContext : DbContext
       public DbSet<DebtTransaction> DebtTransactions { get; set; }
       public DbSet<Item> Items { get; set; }
       public DbSet<Supplier> Suppliers { get; set; }
-      public DbSet<SupplierTransaction> SupplierTransactions { get; set; }
       public DbSet<Employee> Employees { get; set; }
       public DbSet<Salary> Salaries { get; set; }
       public DbSet<Expense> Expenses { get; set; }

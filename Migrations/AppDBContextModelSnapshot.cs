@@ -17,15 +17,16 @@ namespace Maksby.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.DebtInvoice", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
@@ -33,11 +34,11 @@ namespace Maksby.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("SummaryId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("SummaryId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -50,14 +51,15 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.DebtInvoiceItem", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("InvoicesId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("DebtInvoiceId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("ItemId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ItemsId")
+                        .HasColumnType("uuid");
 
                     b.Property<double>("PricePerKilo")
                         .HasColumnType("double precision");
@@ -67,17 +69,18 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InvoicesId");
+                    b.HasIndex("DebtInvoiceId");
 
-                    b.HasIndex("ItemId");
+                    b.HasIndex("ItemsId");
 
                     b.ToTable("DebtInvoiceItem");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.DebtTransaction", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
@@ -85,13 +88,15 @@ namespace Maksby.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("DebtInvoiceId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("DebtInvoiceId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DebtInvoiceId");
 
                     b.HasIndex("SupplierId");
 
@@ -100,11 +105,9 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.Item", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -113,9 +116,11 @@ namespace Maksby.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -128,8 +133,9 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.Supplier", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -138,9 +144,11 @@ namespace Maksby.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -151,35 +159,11 @@ namespace Maksby.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("Maksby.Data.Models.Debt.SupplierTransaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SupplierTransactions");
-                });
-
             modelBuilder.Entity("Maksby.Data.Models.Employee.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -188,9 +172,11 @@ namespace Maksby.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -203,17 +189,21 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Employee.Salary", b =>
                 {
-                    b.Property<int>("id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<double>("BasicSalary")
                         .HasColumnType("double precision");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<double>("Deduction")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid");
 
                     b.Property<double>("NetSalary")
                         .HasColumnType("double precision");
@@ -221,13 +211,10 @@ namespace Maksby.Migrations
                     b.Property<double>("OverTime")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("SummaryId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("SummaryId")
+                        .HasColumnType("uuid");
 
-                    b.Property<DateTime>("date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
 
@@ -238,8 +225,9 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Expense", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
@@ -254,10 +242,11 @@ namespace Maksby.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("SummaryId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("SummaryId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -271,11 +260,9 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Income.Client", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<double>("Balance")
                         .HasColumnType("double precision");
@@ -300,50 +287,48 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Income.ClientInvoice", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("SummrayId")
+                    b.Property<int>("Status")
                         .HasColumnType("integer");
+
+                    b.Property<Guid>("SummaryId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("SummrayId");
+                    b.HasIndex("SummaryId");
 
                     b.ToTable("ClientInvoices");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.ClientInvoiceProduct", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("ClientInvoiceId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ClientInvoiceId")
+                        .HasColumnType("uuid");
 
                     b.Property<double>("PricePerKilo")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
 
                     b.Property<double>("Quantity")
                         .HasColumnType("double precision");
@@ -359,17 +344,18 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Income.ClientTransaction", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ClientId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("ClientInvoiceId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ClientInvoiceId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
@@ -385,11 +371,9 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Income.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -398,11 +382,18 @@ namespace Maksby.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<double>("PricePerKilo")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -414,11 +405,9 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Summary", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<double>("ActualDebt")
                         .HasColumnType("double precision");
@@ -429,10 +418,10 @@ namespace Maksby.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<double>("EtimatedDebt")
+                    b.Property<double>("EstimatedDebt")
                         .HasColumnType("double precision");
 
-                    b.Property<double>("EtimatedIncome")
+                    b.Property<double>("EstimatedIncome")
                         .HasColumnType("double precision");
 
                     b.Property<double>("InitialValue")
@@ -447,21 +436,16 @@ namespace Maksby.Migrations
                     b.Property<double>("TotalSalaries")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Summaries");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.User.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -470,15 +454,18 @@ namespace Maksby.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("JoinedDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
@@ -486,9 +473,11 @@ namespace Maksby.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -501,14 +490,15 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.batch.Batch", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -523,14 +513,15 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.batch.BatchItem", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("BatchId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("BatchId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("ItemId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uuid");
 
                     b.Property<double>("ItemQuantity")
                         .HasColumnType("double precision");
@@ -555,7 +546,7 @@ namespace Maksby.Migrations
                     b.HasOne("Maksby.Data.Models.Debt.Supplier", "Supplier")
                         .WithMany("DebtInvoices")
                         .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Summary");
@@ -567,14 +558,14 @@ namespace Maksby.Migrations
                 {
                     b.HasOne("Maksby.Data.Models.Debt.DebtInvoice", "DebtInvoice")
                         .WithMany("DebtInvoiceItems")
-                        .HasForeignKey("InvoicesId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("DebtInvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Maksby.Data.Models.Debt.Item", "Items")
                         .WithMany("DebtInvoiceItem")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("ItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DebtInvoice");
@@ -584,11 +575,19 @@ namespace Maksby.Migrations
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.DebtTransaction", b =>
                 {
+                    b.HasOne("Maksby.Data.Models.Debt.DebtInvoice", "DebtInvoice")
+                        .WithMany("DebtTransactions")
+                        .HasForeignKey("DebtInvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Maksby.Data.Models.Debt.Supplier", "Supplier")
                         .WithMany("DebtTransactions")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("DebtInvoice");
 
                     b.Navigation("Supplier");
                 });
@@ -598,13 +597,13 @@ namespace Maksby.Migrations
                     b.HasOne("Maksby.Data.Models.Employee.Employee", "Employee")
                         .WithMany("Salaries")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Maksby.Data.Models.Summary", "Summary")
                         .WithMany("Salaries")
                         .HasForeignKey("SummaryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -617,7 +616,7 @@ namespace Maksby.Migrations
                     b.HasOne("Maksby.Data.Models.Summary", "Summary")
                         .WithMany("Expenses")
                         .HasForeignKey("SummaryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Summary");
@@ -628,13 +627,13 @@ namespace Maksby.Migrations
                     b.HasOne("Maksby.Data.Models.Income.Client", "Client")
                         .WithMany("ClientInvoices")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Maksby.Data.Models.Summary", "Summary")
                         .WithMany("ClientInvoices")
-                        .HasForeignKey("SummrayId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("SummaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");
@@ -647,13 +646,13 @@ namespace Maksby.Migrations
                     b.HasOne("Maksby.Data.Models.Income.ClientInvoice", "ClientInvoice")
                         .WithMany("ClientInvoiceProducts")
                         .HasForeignKey("ClientInvoiceId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Maksby.Data.Models.Income.Product", "Product")
                         .WithMany("ClientInvoiceProducts")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ClientInvoice");
@@ -666,13 +665,13 @@ namespace Maksby.Migrations
                     b.HasOne("Maksby.Data.Models.Income.Client", "Client")
                         .WithMany("ClientTransactions")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Maksby.Data.Models.Income.ClientInvoice", "ClientInvoice")
                         .WithMany("ClientTransactions")
                         .HasForeignKey("ClientInvoiceId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Client");
@@ -680,23 +679,12 @@ namespace Maksby.Migrations
                     b.Navigation("ClientInvoice");
                 });
 
-            modelBuilder.Entity("Maksby.Data.Models.Summary", b =>
-                {
-                    b.HasOne("Maksby.Data.Models.User.User", "User")
-                        .WithOne("Summary")
-                        .HasForeignKey("Maksby.Data.Models.Summary", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Maksby.Data.Models.batch.Batch", b =>
                 {
                     b.HasOne("Maksby.Data.Models.Income.Product", "Product")
                         .WithMany("Batches")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -707,13 +695,13 @@ namespace Maksby.Migrations
                     b.HasOne("Maksby.Data.Models.batch.Batch", "Batch")
                         .WithMany("BatchItems")
                         .HasForeignKey("BatchId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Maksby.Data.Models.Debt.Item", "Item")
                         .WithMany("BatchItems")
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Batch");
@@ -724,6 +712,8 @@ namespace Maksby.Migrations
             modelBuilder.Entity("Maksby.Data.Models.Debt.DebtInvoice", b =>
                 {
                     b.Navigation("DebtInvoiceItems");
+
+                    b.Navigation("DebtTransactions");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.Item", b =>
@@ -775,11 +765,6 @@ namespace Maksby.Migrations
                     b.Navigation("Expenses");
 
                     b.Navigation("Salaries");
-                });
-
-            modelBuilder.Entity("Maksby.Data.Models.User.User", b =>
-                {
-                    b.Navigation("Summary");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.batch.Batch", b =>

@@ -20,16 +20,7 @@
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Design.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.Caching.Abstractions.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.Caching.Memory.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.Configuration.Abstractions.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.Logging.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.Options.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.Extensions.Primitives.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.OpenApi.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Mono.TextTemplating.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Npgsql.dll
@@ -43,7 +34,6 @@
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/System.Composition.Hosting.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/System.Composition.Runtime.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/System.Composition.TypedParts.dll
-/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/System.Text.Json.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.resources.dll
@@ -116,6 +106,7 @@
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.csproj.CoreCompileInputs.cache
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.MvcApplicationPartsAssemblyInfo.cs
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.MvcApplicationPartsAssemblyInfo.cache
+/home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.sourcelink.json
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/scopedcss/bundle/Maksby.styles.css
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/staticwebassets.build.json
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/staticwebassets.development.json
@@ -132,4 +123,3 @@
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.pdb
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.genruntimeconfig.cache
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/ref/Maksby.dll
-/home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.sourcelink.json

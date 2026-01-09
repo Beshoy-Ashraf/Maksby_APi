@@ -2,19 +2,25 @@ namespace Maksby.Data.Models.Income;
 
 public class ClientInvoice
 {
-      public int Id { get; set; }
-      public int SummrayId { get; set; }
-      public int ClientId { get; set; }
-      public DateTime Date { get; set; }
+      public Guid Id { get; set; }
+
+      public DateTime Date { get; set; } = DateTime.Now;
 
       public double Amount { get; set; }
-      public required string Status { get; set; }
+      public Status Status { get; set; } = Status.NotPaid;
 
-      public ICollection<ClientInvoiceProduct>? ClientInvoiceProducts { get; set; }
+      public ICollection<ClientInvoiceProduct> ClientInvoiceProducts { get; set; } = [];
 
-      public ICollection<ClientTransaction>? ClientTransactions { get; set; }
+      public ICollection<ClientTransaction> ClientTransactions { get; set; } = [];
 
-      public Summary? Summary { get; private set; }
+      public required Summary Summary { get; set; }
 
-      public Client? Client { get; private set; }
+      public required Client Client { get; set; }
+}
+
+public enum Status
+{
+      NotPaid,
+      pending,
+      Completed,
 }

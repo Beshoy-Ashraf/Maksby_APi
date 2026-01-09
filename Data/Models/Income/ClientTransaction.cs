@@ -2,15 +2,12 @@ namespace Maksby.Data.Models.Income;
 
 public class ClientTransaction
 {
-      public int Id { get; set; }
-      public int ClientId { get; set; }
-      public int ClientInvoiceId { get; set; }
-
-      public DateTime Date { get; set; }
+      public Guid Id { get; set; }
+      public DateTime Date { get; set; } = DateTime.Now;
 
       public double Amount { get; set; }
 
-      public ClientInvoice? ClientInvoice { get; private set; }
+      public required ClientInvoice ClientInvoice { get; set; }
 
-      public Client? Client { get; private set; }
+      public required Client Client { get; set; }
 }

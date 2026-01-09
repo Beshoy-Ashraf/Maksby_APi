@@ -1,4 +1,6 @@
 using Maksby.Data.Context;
+using Maksby.Services.IncomeServices;
+using Maksby.Services.IncomeServices.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -9,6 +11,7 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseNpgsql(builder
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// builder.Services.AddScoped<IIncomeServices, IncomeServices>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
