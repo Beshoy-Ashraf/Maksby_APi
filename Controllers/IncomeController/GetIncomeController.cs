@@ -1,4 +1,5 @@
 using Maksby.Contract;
+using Maksby.Contract.Income;
 using Maksby.Data.Context;
 using Maksby.Data.Models.Debt;
 using Maksby.Data.Models.Income;
@@ -10,11 +11,32 @@ namespace Maksby.Controllers.IncomeController;
 
 public partial class IncomeController : ControllerBase
 {
+      [HttpGet]
+
+      public async Task<ActionResult<List<GetInvoicesResponse>>> GetInvoices(CancellationToken cancellationToken)
+      {
+            try
+            {
+                  return await _services.GetInvoices(cancellationToken);
+            }
+            catch (Exception)
+            {
+                  return NotFound();
+            }
+
+      }
       [HttpGet("{id:guid}")]
 
-      public async Task<ActionResult<List<DebtInvoice>>> GetInvoices([FromRoute] Guid id)
+      public async Task<ActionResult<List<GetInvoicesResponse>>> GetInvoice([FromRoute] Guid Id, CancellationToken cancellationToken)
       {
-            return await _services.Get();
+            try
+            {
+                  return await _services.GetInvoice(Id, cancellationToken);
+            }
+            catch (Exception)
+            {
+                  return NotFound();
+            }
       }
 
 }

@@ -11,7 +11,8 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseNpgsql(builder
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// builder.Services.AddScoped<IIncomeServices, IncomeServices>();
+builder.Services.AddScoped<IIncomeServices, IncomeServices>();
+builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>

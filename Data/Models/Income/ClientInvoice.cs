@@ -4,7 +4,7 @@ public class ClientInvoice
 {
       public Guid Id { get; set; }
 
-      public DateTime Date { get; set; } = DateTime.Now;
+      public DateTime Date { get; set; } = DateTime.UtcNow;
 
       public double Amount { get; set; }
       public Status Status { get; set; } = Status.NotPaid;

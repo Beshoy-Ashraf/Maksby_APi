@@ -4,7 +4,7 @@ public class DebtTransaction
 {
       public Guid Id { get; set; }
       public double Amount { get; set; }
-      public DateTime Date { get; set; } = DateTime.Now;
+      public DateTime Date { get; set; } = DateTime.UtcNow;
 
       public required Supplier Supplier { get; set; }
       public required DebtInvoice DebtInvoice { get; set; }

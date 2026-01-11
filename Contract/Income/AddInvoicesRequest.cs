@@ -13,5 +13,5 @@ public class AddInvoiceRequest
 public class ClientInvoiceProductItem()
 {
       public Guid ProductId { get; set; }
-      public int Quantity { get; set; }
+      public Double Quantity { get; set; }
 }

@@ -395,7 +395,7 @@ namespace Maksby.Migrations
                     b.Property<double>("PricePerKilo")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("Quantity")
+                    b.Property<Double>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedDate")

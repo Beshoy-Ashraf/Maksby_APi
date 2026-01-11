@@ -7,7 +7,7 @@ public class Employee
 
       public string FirstName { get; set; } = "";
       public string LastName { get; set; } = "";
-      public DateTime CreatedDate { get; set; } = DateTime.Now;
+      public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
       public DateTime UpdatedDate { get; set; }
       public DateTime DeletedDate { get; set; }
 

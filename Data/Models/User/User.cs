@@ -9,8 +9,8 @@ public class User
       public string LastName { get; set; } = "";
       public string Phone { get; set; } = "";
       public string Role { get; set; } = "";
-      public DateTime JoinedDate { get; set; } = DateTime.Now;
-      public DateTime CreatedDate { get; set; } = DateTime.Now;
+      public DateTime JoinedDate { get; set; } = DateTime.UtcNow;
+      public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
       public DateTime UpdatedDate { get; set; }
       public DateTime DeletedDate { get; set; }
 
