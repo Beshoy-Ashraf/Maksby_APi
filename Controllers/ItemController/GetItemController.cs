@@ -1,4 +1,4 @@
-using Maksby.Contract.Supplier;
+using Maksby.Contract.Item;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

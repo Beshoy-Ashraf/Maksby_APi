@@ -1,5 +1,7 @@
 using System.Reflection;
 using Maksby.Data.Context;
+using Maksby.Services.EmployeeServices;
+using Maksby.Services.EmployeeServices.Interface;
 using Maksby.Services.ExpensesServices;
 using Maksby.Services.ExpensesServices.Interface;
 using Maksby.Services.IncomeServices;
@@ -24,6 +26,7 @@ builder.Services.AddScoped<IIncomeServices, IncomeServices>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IExpensesServices, ExpensesServices>();
+builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>

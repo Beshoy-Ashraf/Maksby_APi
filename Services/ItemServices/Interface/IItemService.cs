@@ -1,6 +1,6 @@
 
 
-using Maksby.Contract.Supplier;
+using Maksby.Contract.Item;
 
 namespace Maksby.Services.ItemServices.Interface;
 

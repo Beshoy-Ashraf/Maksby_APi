@@ -1,4 +1,4 @@
-namespace Maksby.Contract.Supplier;
+namespace Maksby.Contract.Item;
 
 public class AddItemRequest
 {

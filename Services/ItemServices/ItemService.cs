@@ -1,5 +1,5 @@
 
-using Maksby.Contract.Supplier;
+using Maksby.Contract.Item;
 using Maksby.Data.Context;
 using Maksby.Data.Models.Debt;
 using Maksby.Services.ItemServices.Interface;

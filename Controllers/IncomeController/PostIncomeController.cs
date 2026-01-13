@@ -1,10 +1,7 @@
+
 using Maksby.Contract;
-using Maksby.Data.Context;
-using Maksby.Data.Models.Debt;
-using Maksby.Data.Models.Income;
 using Maksby.Services.IncomeServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 
 namespace Maksby.Controllers.IncomeController;
