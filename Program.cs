@@ -8,6 +8,8 @@ using Maksby.Services.IncomeServices;
 using Maksby.Services.IncomeServices.Interfaces;
 using Maksby.Services.ProductServices;
 using Maksby.Services.ProductServices.Interface;
+using Maksby.Services.SalaryServices;
+using Maksby.Services.SalaryServices.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -27,6 +29,8 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IExpensesServices, ExpensesServices>();
 builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
+builder.Services.AddScoped<ISalaryServices, SalaryServices>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
