@@ -1,5 +1,7 @@
 using System.Reflection;
 using Maksby.Data.Context;
+using Maksby.Services.ExpensesServices;
+using Maksby.Services.ExpensesServices.Interface;
 using Maksby.Services.IncomeServices;
 using Maksby.Services.IncomeServices.Interfaces;
 using Maksby.Services.ProductServices;
@@ -21,6 +23,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IIncomeServices, IncomeServices>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IExpensesServices, ExpensesServices>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
