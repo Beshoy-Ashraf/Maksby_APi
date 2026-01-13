@@ -19,8 +19,8 @@ public class InvoiceItems
       public Guid ProductId { get; set; }
       public String ProductName { get; set; } = "";
       public Double PricePerKilo { get; set; }
-      public Double Quantity { get; set; }
-      public Double Amount => PricePerKilo * Quantity;
+      public Double QuantityPerKilo { get; set; }
+      public Double Amount => PricePerKilo * QuantityPerKilo;
 
 }
 

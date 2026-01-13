@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Maksby.Migrations
 {
     /// <inheritdoc />
-    public partial class addBatch : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Client",
+                name: "Clients",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -24,11 +24,11 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Client", x => x.Id);
+                    table.PrimaryKey("PK_Clients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employee",
+                name: "Employees",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -40,32 +40,34 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employee", x => x.Id);
+                    table.PrimaryKey("PK_Employees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Item",
+                name: "Items",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
+                    QuantityPerKilo = table.Column<double>(type: "double precision", nullable: false),
+                    PricePerKilo = table.Column<double>(type: "double precision", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Item", x => x.Id);
+                    table.PrimaryKey("PK_Items", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    QuantityPerKilo = table.Column<double>(type: "double precision", nullable: false),
                     PricePerKilo = table.Column<double>(type: "double precision", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -74,11 +76,11 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Summary",
+                name: "Summaries",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -94,11 +96,11 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Summary", x => x.Id);
+                    table.PrimaryKey("PK_Summaries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Supplier",
+                name: "Suppliers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -110,11 +112,11 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Supplier", x => x.Id);
+                    table.PrimaryKey("PK_Suppliers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -131,7 +133,7 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -147,15 +149,15 @@ namespace Maksby.Migrations
                 {
                     table.PrimaryKey("PK_Batches", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Batches_Product_ProductId",
+                        name: "FK_Batches_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClientInvoice",
+                name: "ClientInvoices",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -167,23 +169,23 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClientInvoice", x => x.Id);
+                    table.PrimaryKey("PK_ClientInvoices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClientInvoice_Client_ClientId",
+                        name: "FK_ClientInvoices_Clients_ClientId",
                         column: x => x.ClientId,
-                        principalTable: "Client",
+                        principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClientInvoice_Summary_SummaryId",
+                        name: "FK_ClientInvoices_Summaries_SummaryId",
                         column: x => x.SummaryId,
-                        principalTable: "Summary",
+                        principalTable: "Summaries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Expense",
+                name: "Expenses",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -197,17 +199,17 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Expense", x => x.Id);
+                    table.PrimaryKey("PK_Expenses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Expense_Summary_SummaryId",
+                        name: "FK_Expenses_Summaries_SummaryId",
                         column: x => x.SummaryId,
-                        principalTable: "Summary",
+                        principalTable: "Summaries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Salary",
+                name: "Salaries",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -221,23 +223,23 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Salary", x => x.Id);
+                    table.PrimaryKey("PK_Salaries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Salary_Employee_EmployeeId",
+                        name: "FK_Salaries_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalTable: "Employee",
+                        principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Salary_Summary_SummaryId",
+                        name: "FK_Salaries_Summaries_SummaryId",
                         column: x => x.SummaryId,
-                        principalTable: "Summary",
+                        principalTable: "Summaries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DebtInvoice",
+                name: "DebtInvoices",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -248,17 +250,17 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DebtInvoice", x => x.Id);
+                    table.PrimaryKey("PK_DebtInvoices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DebtInvoice_Summary_SummaryId",
+                        name: "FK_DebtInvoices_Summaries_SummaryId",
                         column: x => x.SummaryId,
-                        principalTable: "Summary",
+                        principalTable: "Summaries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DebtInvoice_Supplier_SupplierId",
+                        name: "FK_DebtInvoices_Suppliers_SupplierId",
                         column: x => x.SupplierId,
-                        principalTable: "Supplier",
+                        principalTable: "Suppliers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -268,7 +270,7 @@ namespace Maksby.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ItemQuantity = table.Column<double>(type: "double precision", nullable: false),
+                    ItemQuantityPerKilo = table.Column<double>(type: "double precision", nullable: false),
                     BatchId = table.Column<Guid>(type: "uuid", nullable: false),
                     ItemId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
@@ -282,42 +284,42 @@ namespace Maksby.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BatchItems_Item_ItemId",
+                        name: "FK_BatchItems_Items_ItemId",
                         column: x => x.ItemId,
-                        principalTable: "Item",
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClientInvoiceProduct",
+                name: "ClientInvoiceProducts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     PricePerKilo = table.Column<double>(type: "double precision", nullable: false),
-                    Quantity = table.Column<double>(type: "double precision", nullable: false),
+                    QuantityPerKilo = table.Column<double>(type: "double precision", nullable: false),
                     ProductId = table.Column<Guid>(type: "uuid", nullable: false),
                     ClientInvoiceId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClientInvoiceProduct", x => x.Id);
+                    table.PrimaryKey("PK_ClientInvoiceProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClientInvoiceProduct_ClientInvoice_ClientInvoiceId",
+                        name: "FK_ClientInvoiceProducts_ClientInvoices_ClientInvoiceId",
                         column: x => x.ClientInvoiceId,
-                        principalTable: "ClientInvoice",
+                        principalTable: "ClientInvoices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClientInvoiceProduct_Product_ProductId",
+                        name: "FK_ClientInvoiceProducts_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClientTransaction",
+                name: "ClientTransactions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -328,17 +330,17 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClientTransaction", x => x.Id);
+                    table.PrimaryKey("PK_ClientTransactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClientTransaction_ClientInvoice_ClientInvoiceId",
+                        name: "FK_ClientTransactions_ClientInvoices_ClientInvoiceId",
                         column: x => x.ClientInvoiceId,
-                        principalTable: "ClientInvoice",
+                        principalTable: "ClientInvoices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClientTransaction_Client_ClientId",
+                        name: "FK_ClientTransactions_Clients_ClientId",
                         column: x => x.ClientId,
-                        principalTable: "Client",
+                        principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -349,7 +351,7 @@ namespace Maksby.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     PricePerKilo = table.Column<double>(type: "double precision", nullable: false),
-                    Quantity = table.Column<double>(type: "double precision", nullable: false),
+                    QuantityPerKilo = table.Column<double>(type: "double precision", nullable: false),
                     DebtInvoiceId = table.Column<Guid>(type: "uuid", nullable: false),
                     ItemsId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
@@ -357,21 +359,21 @@ namespace Maksby.Migrations
                 {
                     table.PrimaryKey("PK_DebtInvoiceItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DebtInvoiceItem_DebtInvoice_DebtInvoiceId",
+                        name: "FK_DebtInvoiceItem_DebtInvoices_DebtInvoiceId",
                         column: x => x.DebtInvoiceId,
-                        principalTable: "DebtInvoice",
+                        principalTable: "DebtInvoices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DebtInvoiceItem_Item_ItemsId",
+                        name: "FK_DebtInvoiceItem_Items_ItemsId",
                         column: x => x.ItemsId,
-                        principalTable: "Item",
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DebtTransaction",
+                name: "DebtTransactions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -382,17 +384,17 @@ namespace Maksby.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DebtTransaction", x => x.Id);
+                    table.PrimaryKey("PK_DebtTransactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DebtTransaction_DebtInvoice_DebtInvoiceId",
+                        name: "FK_DebtTransactions_DebtInvoices_DebtInvoiceId",
                         column: x => x.DebtInvoiceId,
-                        principalTable: "DebtInvoice",
+                        principalTable: "DebtInvoices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DebtTransaction_Supplier_SupplierId",
+                        name: "FK_DebtTransactions_Suppliers_SupplierId",
                         column: x => x.SupplierId,
-                        principalTable: "Supplier",
+                        principalTable: "Suppliers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -413,44 +415,34 @@ namespace Maksby.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClientInvoice_ClientId",
-                table: "ClientInvoice",
-                column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ClientInvoice_SummaryId",
-                table: "ClientInvoice",
-                column: "SummaryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ClientInvoiceProduct_ClientInvoiceId",
-                table: "ClientInvoiceProduct",
+                name: "IX_ClientInvoiceProducts_ClientInvoiceId",
+                table: "ClientInvoiceProducts",
                 column: "ClientInvoiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClientInvoiceProduct_ProductId",
-                table: "ClientInvoiceProduct",
+                name: "IX_ClientInvoiceProducts_ProductId",
+                table: "ClientInvoiceProducts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClientTransaction_ClientId",
-                table: "ClientTransaction",
+                name: "IX_ClientInvoices_ClientId",
+                table: "ClientInvoices",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClientTransaction_ClientInvoiceId",
-                table: "ClientTransaction",
-                column: "ClientInvoiceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DebtInvoice_SummaryId",
-                table: "DebtInvoice",
+                name: "IX_ClientInvoices_SummaryId",
+                table: "ClientInvoices",
                 column: "SummaryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DebtInvoice_SupplierId",
-                table: "DebtInvoice",
-                column: "SupplierId");
+                name: "IX_ClientTransactions_ClientId",
+                table: "ClientTransactions",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClientTransactions_ClientInvoiceId",
+                table: "ClientTransactions",
+                column: "ClientInvoiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DebtInvoiceItem_DebtInvoiceId",
@@ -463,28 +455,38 @@ namespace Maksby.Migrations
                 column: "ItemsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DebtTransaction_DebtInvoiceId",
-                table: "DebtTransaction",
-                column: "DebtInvoiceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DebtTransaction_SupplierId",
-                table: "DebtTransaction",
-                column: "SupplierId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Expense_SummaryId",
-                table: "Expense",
+                name: "IX_DebtInvoices_SummaryId",
+                table: "DebtInvoices",
                 column: "SummaryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Salary_EmployeeId",
-                table: "Salary",
+                name: "IX_DebtInvoices_SupplierId",
+                table: "DebtInvoices",
+                column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DebtTransactions_DebtInvoiceId",
+                table: "DebtTransactions",
+                column: "DebtInvoiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DebtTransactions_SupplierId",
+                table: "DebtTransactions",
+                column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Expenses_SummaryId",
+                table: "Expenses",
+                column: "SummaryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Salaries_EmployeeId",
+                table: "Salaries",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Salary_SummaryId",
-                table: "Salary",
+                name: "IX_Salaries_SummaryId",
+                table: "Salaries",
                 column: "SummaryId");
         }
 
@@ -495,52 +497,52 @@ namespace Maksby.Migrations
                 name: "BatchItems");
 
             migrationBuilder.DropTable(
-                name: "ClientInvoiceProduct");
+                name: "ClientInvoiceProducts");
 
             migrationBuilder.DropTable(
-                name: "ClientTransaction");
+                name: "ClientTransactions");
 
             migrationBuilder.DropTable(
                 name: "DebtInvoiceItem");
 
             migrationBuilder.DropTable(
-                name: "DebtTransaction");
+                name: "DebtTransactions");
 
             migrationBuilder.DropTable(
-                name: "Expense");
+                name: "Expenses");
 
             migrationBuilder.DropTable(
-                name: "Salary");
+                name: "Salaries");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Batches");
 
             migrationBuilder.DropTable(
-                name: "ClientInvoice");
+                name: "ClientInvoices");
 
             migrationBuilder.DropTable(
-                name: "Item");
+                name: "Items");
 
             migrationBuilder.DropTable(
-                name: "DebtInvoice");
+                name: "DebtInvoices");
 
             migrationBuilder.DropTable(
-                name: "Employee");
+                name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Client");
+                name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "Summary");
+                name: "Summaries");
 
             migrationBuilder.DropTable(
-                name: "Supplier");
+                name: "Suppliers");
         }
     }
 }

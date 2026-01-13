@@ -19,12 +19,12 @@ public class SupplierService : ISupplierService
             _logger = logger;
       }
 
-      public async Task<Guid> AddSupplier(SupplierRequest SupplierRequest, CancellationToken cancellationToken)
+      public async Task<Guid> AddSupplier(AddSupplierRequest addSupplierRequest, CancellationToken cancellationToken)
       {
             var supplier = new Supplier
             {
-                  FirstName = SupplierRequest.FirstName,
-                  LastName = SupplierRequest.LastName,
+                  FirstName = addSupplierRequest.FirstName,
+                  LastName = addSupplierRequest.LastName,
 
             };
             await _dbContext.Suppliers.AddAsync(supplier, cancellationToken);
@@ -35,7 +35,7 @@ public class SupplierService : ISupplierService
 
 
 
-      public async Task<Guid> EditSupplier(Guid id, SupplierRequest SupplierRequest, CancellationToken cancellationToken)
+      public async Task<Guid> EditSupplier(Guid id, AddSupplierRequest addSupplierRequest, CancellationToken cancellationToken)
       {
             var Supplier = await _dbContext.Suppliers.SingleOrDefaultAsync(c => c.Id == id);
             if (Supplier == null)
@@ -43,8 +43,8 @@ public class SupplierService : ISupplierService
                   throw new Exception("Supplier not found");
             }
 
-            Supplier.FirstName = SupplierRequest.FirstName;
-            Supplier.LastName = SupplierRequest.LastName;
+            Supplier.FirstName = addSupplierRequest.FirstName;
+            Supplier.LastName = addSupplierRequest.LastName;
             Supplier.UpdatedDate = DateTime.UtcNow;
 
             _dbContext.Suppliers.Update(Supplier);
@@ -52,7 +52,7 @@ public class SupplierService : ISupplierService
 
             return Supplier.Id;
       }
-      public async Task<SupplierRequest> GetSupplier(Guid id, CancellationToken cancellationToken)
+      public async Task<GetSupplierRequest> GetSupplier(Guid id, CancellationToken cancellationToken)
       {
             var Supplier = await _dbContext.Suppliers.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
             if (Supplier == null)
@@ -60,8 +60,9 @@ public class SupplierService : ISupplierService
                   throw new Exception("Supplier not found");
             }
 
-            var retrieveSupplier = new SupplierRequest
+            var retrieveSupplier = new GetSupplierRequest
             {
+                  Id = Supplier.Id,
                   FirstName = Supplier.FirstName,
                   LastName = Supplier.LastName,
             };
@@ -69,18 +70,19 @@ public class SupplierService : ISupplierService
 
             return retrieveSupplier;
       }
-      public async Task<List<SupplierRequest>> GetSuppliers(CancellationToken cancellationToken)
+      public async Task<List<GetSupplierRequest>> GetSuppliers(CancellationToken cancellationToken)
       {
             var Supplier = await _dbContext.Suppliers.ToListAsync(cancellationToken);
             if (Supplier == null)
             {
                   throw new Exception("Supplier not found");
             }
-            List<SupplierRequest> SupplierList = new List<SupplierRequest>();
+            List<GetSupplierRequest> SupplierList = new List<GetSupplierRequest>();
             foreach (var ele in Supplier)
             {
-                  var retrieveSupplier = new SupplierRequest
+                  var retrieveSupplier = new GetSupplierRequest
                   {
+                        Id = ele.Id,
                         FirstName = ele.FirstName,
                         LastName = ele.LastName,
                   };

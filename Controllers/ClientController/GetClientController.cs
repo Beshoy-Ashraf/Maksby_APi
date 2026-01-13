@@ -9,14 +9,29 @@ public partial class ClientController : ControllerBase
 {
 
       [HttpGet("{id:Guid}")]
-      public async Task<ActionResult<ClientRequest>> GetClient([FromRoute] Guid id, CancellationToken cancellationToken)
+      public async Task<ActionResult<GetClientRequest>> GetClient([FromRoute] Guid id, CancellationToken cancellationToken)
       {
-            return await _services.GetClient(id, cancellationToken);
+            try
+            {
+                  return await _services.GetClient(id, cancellationToken);
+            }
+            catch (Exception)
+            {
+                  return BadRequest("Can't get Client");
+            }
       }
       [HttpGet]
-      public async Task<ActionResult<List<ClientRequest>>> GetClients(CancellationToken cancellationToken)
+      public async Task<ActionResult<List<GetClientRequest>>> GetClients(CancellationToken cancellationToken)
       {
-            return await _services.GetClients(cancellationToken);
+
+            try
+            {
+                  return await _services.GetClients(cancellationToken);
+            }
+            catch (Exception)
+            {
+                  return BadRequest("Can't get Clients");
+            }
       }
 
 

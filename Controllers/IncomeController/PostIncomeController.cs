@@ -4,6 +4,7 @@ using Maksby.Data.Models.Debt;
 using Maksby.Data.Models.Income;
 using Maksby.Services.IncomeServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 
 namespace Maksby.Controllers.IncomeController;
@@ -18,9 +19,9 @@ public partial class IncomeController : ControllerBase
                   var invoice = await _services.Add(addInvoiceRequest, cancellationToken);
                   return Ok(invoice);
             }
-            catch
+            catch (Exception e)
             {
-                  return BadRequest("Error occur while adding invoices ");
+                  return BadRequest($"Error occur while adding invoices  : {e}");
             }
       }
 

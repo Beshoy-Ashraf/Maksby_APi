@@ -9,13 +9,13 @@ public partial class SupplierController : ControllerBase
 {
       [HttpGet("{Id:guid}")]
 
-      public async Task<SupplierRequest> GetSupplier([FromRoute] Guid id, CancellationToken cancellationToken)
+      public async Task<GetSupplierRequest> GetSupplier([FromRoute] Guid id, CancellationToken cancellationToken)
       {
             return await _services.GetSupplier(id, cancellationToken);
       }
       [HttpGet]
 
-      public async Task<List<SupplierRequest>> GetSuppliers(CancellationToken cancellationToken)
+      public async Task<List<GetSupplierRequest>> GetSuppliers(CancellationToken cancellationToken)
       {
             return await _services.GetSuppliers(cancellationToken);
       }

@@ -3,6 +3,7 @@ using System.Linq;
 using Maksby.Contract;
 using Maksby.Contract.Income;
 using Maksby.Data.Context;
+using Maksby.Data.Models;
 using Maksby.Data.Models.Debt;
 using Maksby.Data.Models.Income;
 using Maksby.Services.IncomeServices.Interfaces;
@@ -28,6 +29,7 @@ public class IncomeServices : IIncomeServices
       public async Task<List<GetInvoicesResponse>> GetInvoices(CancellationToken cancellationToken)
       {
             var tmp = await _dbContext.ClientInvoices
+                .Include(ci => ci.Client)
                 .Include(ci => ci.ClientInvoiceProducts)
                 .ThenInclude(p => p.Product)
                 .Select(
@@ -44,7 +46,7 @@ public class IncomeServices : IIncomeServices
                             ProductId = i.Product.Id,
                             ProductName = i.Product.Name,
                             PricePerKilo = i.PricePerKilo,
-                            Quantity = i.Quantity
+                            QuantityPerKilo = i.QuantityPerKilo
                       }).ToList()
                 }
                 )
@@ -52,78 +54,78 @@ public class IncomeServices : IIncomeServices
 
             return tmp;
       }
-      public async Task<List<GetInvoicesResponse>> GetInvoice(Guid Id, CancellationToken cancellationToken)
+      public async Task<GetInvoicesResponse> GetInvoice(Guid Id, CancellationToken cancellationToken)
       {
-            var tmp = await _dbContext.ClientInvoices.Where(x => x.Id == Id)
+            var invoice = await _dbContext.ClientInvoices
+                .Include(ci => ci.Client)
                 .Include(ci => ci.ClientInvoiceProducts)
                 .ThenInclude(p => p.Product)
-                .Select(
-                x => new GetInvoicesResponse
-                {
-                      InvoiceId = x.Id,
-                      ClientID = x.Client.Id,
-                      Date = x.Date,
-                      Amount = x.Amount,
-                      Status = (Contract.Income.Status)x.Status,
-                      InvoiceItems = x.ClientInvoiceProducts.Select(i => new InvoiceItems
-                      {
-                            Id = i.Id,
-                            ProductId = i.Product.Id,
-                            ProductName = i.Product.Name,
-                            PricePerKilo = i.PricePerKilo,
-                            Quantity = i.Quantity
-                      }).ToList()
-                }
-                )
-                .ToListAsync(cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == Id, cancellationToken) ?? throw new KeyNotFoundException($"Invoice with ID {Id} was not found.");
 
-            return tmp;
+            var response = new GetInvoicesResponse
+            {
+                  InvoiceId = invoice.Id,
+                  ClientID = invoice.Client.Id,
+                  Date = invoice.Date,
+                  Amount = invoice.Amount,
+                  Status = (Contract.Income.Status)invoice.Status,
+                  InvoiceItems = [.. invoice.ClientInvoiceProducts.Select(i => new InvoiceItems
+                  {
+                        Id = i.Id,
+                        ProductId = i.Product.Id,
+                        ProductName = i.Product.Name,
+                        PricePerKilo = i.PricePerKilo,
+                        QuantityPerKilo = i.QuantityPerKilo
+                  })]
+            };
+
+            return response;
       }
       public async Task<Guid> EditInvoice(AddInvoiceRequest addInvoiceRequest, Guid Id, CancellationToken cancellationToken)
       {
-            var tmp = await _dbContext
-                            .ClientInvoices
-                            .Where(i => i.Id == Id)
-                            .Include(cip => cip.ClientInvoiceProducts)
-                            .ThenInclude(p => p.Product)
-                            .ToListAsync(cancellationToken);
+            var invoice = await _dbContext.ClientInvoices
+                .Include(ci => ci.Client)
+                .Include(ci => ci.ClientInvoiceProducts)
+                .ThenInclude(p => p.Product)
+                .FirstOrDefaultAsync(x => x.Id == Id, cancellationToken) ?? throw new KeyNotFoundException($"Invoice with ID {Id} was not found.");
 
 
-            var client = await _dbContext.Clients.FirstOrDefaultAsync(x => x.Id == addInvoiceRequest.ClientId, cancellationToken);
+            var requestedProductIds = addInvoiceRequest.ClientInvoiceProductItem.Select(i => i.ProductId).ToList();
 
-            if (client is null)
-                  throw new Exception();
+            var allProducts = await _dbContext.Products
+                .Where(p => requestedProductIds.Contains(p.Id))
+                .ToListAsync(cancellationToken);
 
+            var products = allProducts
+                .Where(p => addInvoiceRequest.ClientInvoiceProductItem
+                    .Any(i => i.ProductId == p.Id && i.QuantityPerKilo <= p.QuantityPerKilo))
+                .ToList();
 
-            var products = await _dbContext.Products
-            .Where(p => addInvoiceRequest
-                       .ClientInvoiceProductItem
-                       .Any(i => i.ProductId == p.Id && i.Quantity <= p.Quantity)).ToListAsync(cancellationToken);
-
-            foreach (var ele in products)
-                  ele.Quantity += tmp.First().ClientInvoiceProducts.First().Product.Quantity;
+            foreach (var invoiceProduct in invoice.ClientInvoiceProducts)
+            {
+                  var product = allProducts.FirstOrDefault(p => p.Id == invoiceProduct.Product.Id);
+                  if (product != null)
+                  {
+                        product.QuantityPerKilo += invoiceProduct.QuantityPerKilo;
+                  }
+            }
 
 
             if (products.Count != addInvoiceRequest.ClientInvoiceProductItem.Count)
-                  throw new Exception(); var summary = await _dbContext.Summaries.FirstAsync(cancellationToken);
-            var invoice = new ClientInvoice
-            {
-                  Summary = summary,
-                  Client = client,
-                  Amount = 0,
-            };
+                  throw new Exception();
+
+            invoice.Amount = 0;
+
             var invoiceProducts = new List<ClientInvoiceProduct>();
-
-
             foreach (var ele in products)
             {
                   var item = addInvoiceRequest.ClientInvoiceProductItem.First(x => x.ProductId == ele.Id);
-                  ele.Quantity -= item.Quantity;
+                  ele.QuantityPerKilo -= item.QuantityPerKilo;
                   var invoiceProduct = new ClientInvoiceProduct
                   {
                         Product = ele,
                         ClientInvoice = invoice,
-                        Quantity = item.Quantity,
+                        QuantityPerKilo = item.QuantityPerKilo,
                         PricePerKilo = ele.PricePerKilo,
 
                   };
@@ -133,7 +135,6 @@ public class IncomeServices : IIncomeServices
             }
             invoice.ClientInvoiceProducts = invoiceProducts;
 
-            await _dbContext.ClientInvoices.AddAsync(invoice, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return invoice.Id;
 
@@ -149,14 +150,27 @@ public class IncomeServices : IIncomeServices
                   throw new Exception();
 
 
-            var products = await _dbContext.Products
-            .Where(p => addInvoiceRequest
-                       .ClientInvoiceProductItem
-                       .Any(i => i.ProductId == p.Id && i.Quantity <= p.Quantity)).ToListAsync(cancellationToken);
+            var requestedProductIds = addInvoiceRequest.ClientInvoiceProductItem.Select(i => i.ProductId).ToList();
+
+            var allProducts = await _dbContext.Products
+                .Where(p => requestedProductIds.Contains(p.Id))
+                .ToListAsync(cancellationToken);
+
+            var products = allProducts
+                .Where(p => addInvoiceRequest.ClientInvoiceProductItem
+                    .Any(i => i.ProductId == p.Id && i.QuantityPerKilo <= p.QuantityPerKilo))
+                .ToList();
 
 
             if (products.Count != addInvoiceRequest.ClientInvoiceProductItem.Count)
-                  throw new Exception(); var summary = await _dbContext.Summaries.FirstAsync(cancellationToken);
+                  throw new Exception();
+
+            var summary = await _dbContext.Summaries.FirstOrDefaultAsync(cancellationToken);
+            if (summary == null)
+            {
+                  summary = new Summary();
+                  await _dbContext.Summaries.AddAsync(summary, cancellationToken);
+            }
 
             var invoice = new ClientInvoice
             {
@@ -170,12 +184,12 @@ public class IncomeServices : IIncomeServices
             foreach (var ele in products)
             {
                   var item = addInvoiceRequest.ClientInvoiceProductItem.First(x => x.ProductId == ele.Id);
-                  ele.Quantity -= item.Quantity;
+                  ele.QuantityPerKilo -= item.QuantityPerKilo;
                   var invoiceProduct = new ClientInvoiceProduct
                   {
                         Product = ele,
                         ClientInvoice = invoice,
-                        Quantity = item.Quantity,
+                        QuantityPerKilo = item.QuantityPerKilo,
                         PricePerKilo = ele.PricePerKilo,
 
                   };

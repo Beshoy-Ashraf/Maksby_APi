@@ -64,7 +64,7 @@ namespace Maksby.Migrations
                     b.Property<double>("PricePerKilo")
                         .HasColumnType("double precision");
 
-                    b.Property<double>("Quantity")
+                    b.Property<double>("QuantityPerKilo")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
@@ -122,6 +122,12 @@ namespace Maksby.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<double>("PricePerKilo")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("QuantityPerKilo")
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -330,7 +336,7 @@ namespace Maksby.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("Quantity")
+                    b.Property<double>("QuantityPerKilo")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
@@ -392,7 +398,7 @@ namespace Maksby.Migrations
                     b.Property<double>("PricePerKilo")
                         .HasColumnType("double precision");
 
-                    b.Property<double>("Quantity")
+                    b.Property<double>("QuantityPerKilo")
                         .HasColumnType("double precision");
 
                     b.Property<DateTime>("UpdatedDate")
@@ -523,7 +529,7 @@ namespace Maksby.Migrations
                     b.Property<Guid>("ItemId")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("ItemQuantity")
+                    b.Property<double>("ItemQuantityPerKilo")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");

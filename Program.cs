@@ -1,6 +1,9 @@
+using System.Reflection;
 using Maksby.Data.Context;
 using Maksby.Services.IncomeServices;
 using Maksby.Services.IncomeServices.Interfaces;
+using Maksby.Services.ProductServices;
+using Maksby.Services.ProductServices.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -10,9 +13,14 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseNpgsql(builder
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 builder.Services.AddScoped<IIncomeServices, IncomeServices>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>

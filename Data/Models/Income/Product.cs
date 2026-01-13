@@ -6,7 +6,7 @@ public class Product
 {
       public Guid Id { get; set; }
       public required string Name { get; set; }
-      public required Double Quantity { get; set; }
+      public required Double QuantityPerKilo { get; set; }
       public double PricePerKilo { get; set; }
       public string Description { get; set; } = "";
       public DateTime CreatedDate { get; set; } = DateTime.UtcNow;

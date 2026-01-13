@@ -9,9 +9,16 @@ public partial class ClientController : ControllerBase
 {
 
       [HttpPut("{id:Guid}")]
-      public async Task<ActionResult<Guid>> EditClient([FromRoute] Guid id, [FromBody] ClientRequest ClientRequest, CancellationToken cancellationToken)
+      public async Task<ActionResult<Guid>> EditClient([FromRoute] Guid id, [FromBody] AddClientRequest addClientRequest, CancellationToken cancellationToken)
       {
-            return await _services.EditClient(id, ClientRequest, cancellationToken);
+            try
+            {
+                  return await _services.EditClient(id, addClientRequest, cancellationToken);
+            }
+            catch (Exception)
+            {
+                  return BadRequest("Can't edit client");
+            }
       }
 
 

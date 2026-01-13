@@ -9,9 +9,18 @@ public partial class ClientController : ControllerBase
 {
 
       [HttpPost]
-      public async Task<ActionResult<Guid>> AddClient([FromBody] ClientRequest ClientRequest, CancellationToken cancellationToken)
+      public async Task<ActionResult<Guid>> AddClient([FromBody] AddClientRequest addClientRequest, CancellationToken cancellationToken)
       {
-            return await _services.AddClient(ClientRequest, cancellationToken);
+
+            try
+            {
+                  return await _services.AddClient(addClientRequest, cancellationToken);
+            }
+            catch (Exception)
+            {
+                  return BadRequest("Can't Add Client");
+            }
+
       }
 
 

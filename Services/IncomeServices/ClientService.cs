@@ -18,12 +18,12 @@ public class ClientService : IClientService
             _serviceProvider = serviceProvider;
             _logger = logger;
       }
-      public async Task<Guid> AddClient(ClientRequest ClientRequest, CancellationToken cancellationToken)
+      public async Task<Guid> AddClient(AddClientRequest addClientRequest, CancellationToken cancellationToken)
       {
             var client = new Client
             {
-                  Name = ClientRequest.Name,
-                  Balance = ClientRequest.Balance,
+                  Name = addClientRequest.Name,
+                  Balance = addClientRequest.Balance,
                   UpdatedDate = DateTime.UtcNow,
                   DeletedDate = DateTime.UtcNow,
 
@@ -33,7 +33,7 @@ public class ClientService : IClientService
             return client.Id;
 
       }
-      public async Task<Guid> EditClient(Guid id, ClientRequest ClientRequest, CancellationToken cancellationToken)
+      public async Task<Guid> EditClient(Guid id, AddClientRequest addClientRequest, CancellationToken cancellationToken)
       {
             var client = await _dbContext.Clients.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
             if (client == null)
@@ -41,8 +41,9 @@ public class ClientService : IClientService
                   throw new Exception("Client not found");
             }
 
-            client.Name = ClientRequest.Name;
-            client.Balance = ClientRequest.Balance;
+            client.Name = addClientRequest.Name;
+            //if any issues appear
+            client.Balance = addClientRequest.Balance;
             client.UpdatedDate = DateTime.UtcNow;
 
             _dbContext.Clients.Update(client);
@@ -50,7 +51,7 @@ public class ClientService : IClientService
 
             return client.Id;
       }
-      public async Task<ClientRequest> GetClient(Guid id, CancellationToken cancellationToken)
+      public async Task<GetClientRequest> GetClient(Guid id, CancellationToken cancellationToken)
       {
             var client = await _dbContext.Clients.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
             if (client == null)
@@ -58,7 +59,7 @@ public class ClientService : IClientService
                   throw new Exception("Client not found");
             }
 
-            var retrieveClient = new ClientRequest
+            var retrieveClient = new GetClientRequest
             {
                   Id = client.Id,
                   Name = client.Name,
@@ -68,17 +69,17 @@ public class ClientService : IClientService
 
             return retrieveClient;
       }
-      public async Task<List<ClientRequest>> GetClients(CancellationToken cancellationToken)
+      public async Task<List<GetClientRequest>> GetClients(CancellationToken cancellationToken)
       {
             var client = await _dbContext.Clients.ToListAsync(cancellationToken);
             if (client == null)
             {
                   throw new Exception("Client not found");
             }
-            List<ClientRequest> clientList = new List<ClientRequest>();
+            List<GetClientRequest> clientList = new List<GetClientRequest>();
             foreach (var ele in client)
             {
-                  var retrieveClient = new ClientRequest
+                  var retrieveClient = new GetClientRequest
                   {
                         Id = ele.Id,
                         Name = ele.Name,

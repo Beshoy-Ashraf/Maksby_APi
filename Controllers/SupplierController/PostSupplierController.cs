@@ -9,9 +9,9 @@ public partial class SupplierController : ControllerBase
 {
       [HttpPost]
 
-      public async Task<Guid> AddSupplier([FromBody] SupplierRequest supplierRequest, CancellationToken cancellationToken)
+      public async Task<Guid> AddSupplier([FromBody] AddSupplierRequest addSupplierRequest, CancellationToken cancellationToken)
       {
-            return await _services.AddSupplier(supplierRequest, cancellationToken);
+            return await _services.AddSupplier(addSupplierRequest, cancellationToken);
       }
 
 

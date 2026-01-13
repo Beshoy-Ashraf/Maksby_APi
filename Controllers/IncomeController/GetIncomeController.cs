@@ -11,6 +11,23 @@ namespace Maksby.Controllers.IncomeController;
 
 public partial class IncomeController : ControllerBase
 {
+      [HttpGet("{id:Guid}")]
+
+      public async Task<ActionResult<GetInvoicesResponse>> GetInvoice([FromRoute] Guid id, CancellationToken cancellationToken)
+      {
+            try
+            {
+                  return await _services.GetInvoice(id, cancellationToken);
+            }
+            catch (KeyNotFoundException e)
+            {
+                  return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                  return BadRequest(e.Message);
+            }
+      }
       [HttpGet]
 
       public async Task<ActionResult<List<GetInvoicesResponse>>> GetInvoices(CancellationToken cancellationToken)
@@ -19,24 +36,11 @@ public partial class IncomeController : ControllerBase
             {
                   return await _services.GetInvoices(cancellationToken);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                  return NotFound();
+                  return BadRequest(e);
             }
 
-      }
-      [HttpGet("{id:guid}")]
-
-      public async Task<ActionResult<List<GetInvoicesResponse>>> GetInvoice([FromRoute] Guid Id, CancellationToken cancellationToken)
-      {
-            try
-            {
-                  return await _services.GetInvoice(Id, cancellationToken);
-            }
-            catch (Exception)
-            {
-                  return NotFound();
-            }
       }
 
 }

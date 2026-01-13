@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Maksby.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20260109153112_addDebt")]
-    partial class addDebt
+    [Migration("20260111193806_initialmigration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,7 +67,7 @@ namespace Maksby.Migrations
                     b.Property<double>("PricePerKilo")
                         .HasColumnType("double precision");
 
-                    b.Property<double>("Quantity")
+                    b.Property<double>("QuantityPerKilo")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
@@ -125,6 +125,12 @@ namespace Maksby.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<double>("PricePerKilo")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("QuantityPerKilo")
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
@@ -187,7 +193,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Employee.Salary", b =>
@@ -223,7 +229,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("SummaryId");
 
-                    b.ToTable("Salary");
+                    b.ToTable("Salaries", (string)null);
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Expense", b =>
@@ -258,7 +264,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("SummaryId");
 
-                    b.ToTable("Expense");
+                    b.ToTable("Expenses");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.Client", b =>
@@ -285,7 +291,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Client");
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.ClientInvoice", b =>
@@ -315,7 +321,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("SummaryId");
 
-                    b.ToTable("ClientInvoice");
+                    b.ToTable("ClientInvoices");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.ClientInvoiceProduct", b =>
@@ -333,7 +339,7 @@ namespace Maksby.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("Quantity")
+                    b.Property<double>("QuantityPerKilo")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
@@ -342,7 +348,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ClientInvoiceProduct");
+                    b.ToTable("ClientInvoiceProducts");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.ClientTransaction", b =>
@@ -369,7 +375,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("ClientInvoiceId");
 
-                    b.ToTable("ClientTransaction");
+                    b.ToTable("ClientTransactions");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.Product", b =>
@@ -395,15 +401,15 @@ namespace Maksby.Migrations
                     b.Property<double>("PricePerKilo")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                    b.Property<double>("QuantityPerKilo")
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Summary", b =>
@@ -441,7 +447,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Summary");
+                    b.ToTable("Summaries");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.User.User", b =>
@@ -488,7 +494,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.batch.Batch", b =>
@@ -526,7 +532,7 @@ namespace Maksby.Migrations
                     b.Property<Guid>("ItemId")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("ItemQuantity")
+                    b.Property<double>("ItemQuantityPerKilo")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");

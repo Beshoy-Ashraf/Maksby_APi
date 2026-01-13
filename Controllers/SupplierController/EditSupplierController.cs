@@ -9,9 +9,9 @@ public partial class SupplierController : ControllerBase
 {
       [HttpPut("{id:guid}")]
 
-      public async Task<Guid> EditSupplier([FromRoute] Guid id, SupplierRequest supplierRequest, CancellationToken cancellationToken)
+      public async Task<Guid> EditSupplier([FromRoute] Guid id, AddSupplierRequest addSupplierRequest, CancellationToken cancellationToken)
       {
-            return await _services.EditSupplier(id, supplierRequest, cancellationToken);
+            return await _services.EditSupplier(id, addSupplierRequest, cancellationToken);
       }
 
 

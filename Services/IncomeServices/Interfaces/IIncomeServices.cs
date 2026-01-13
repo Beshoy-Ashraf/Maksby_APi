@@ -9,6 +9,6 @@ public interface IIncomeServices
 {
       Task<List<GetInvoicesResponse>> GetInvoices(CancellationToken cancellationToken);
       Task<Guid> Add(AddInvoiceRequest addInvoiceRequest, CancellationToken cancellationToken);
-      Task<List<GetInvoicesResponse>> GetInvoice(Guid Id, CancellationToken cancellationToken);
+      Task<GetInvoicesResponse> GetInvoice(Guid Id, CancellationToken cancellationToken);
       Task<Guid> EditInvoice(AddInvoiceRequest addInvoiceRequest, Guid Id, CancellationToken cancellationToken);
 }
