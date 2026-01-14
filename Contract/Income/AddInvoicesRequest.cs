@@ -1,6 +1,4 @@
-using Maksby.Data.Models.Income;
-
-namespace Maksby.Contract;
+namespace Maksby.Contract.Income;
 
 public class AddInvoiceRequest
 {

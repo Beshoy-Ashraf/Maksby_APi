@@ -16,5 +16,41 @@
         <member name="M:Maksby.Migrations.initialmigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:Maksby.Migrations.editdebt">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editdebt.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editdebt.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editdebt.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Maksby.Migrations.StatusToSupplierInvoices">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.StatusToSupplierInvoices.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.StatusToSupplierInvoices.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.StatusToSupplierInvoices.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Maksby.Migrations.editAmountColum">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editAmountColum.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editAmountColum.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editAmountColum.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

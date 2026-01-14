@@ -14,7 +14,7 @@ public class ConfigurationForDebtInvoiceItem : IEntityTypeConfiguration<DebtInvo
             builder.HasOne(x => x.DebtInvoice)
                    .WithMany(i => i.DebtInvoiceItems);
 
-            builder.HasOne(x => x.Items)
+            builder.HasOne(x => x.Item)
                   .WithMany(x => x.DebtInvoiceItem);
       }
 }

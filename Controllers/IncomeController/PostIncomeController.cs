@@ -1,6 +1,6 @@
 
 using Maksby.Contract;
-using Maksby.Services.IncomeServices.Interfaces;
+using Maksby.Contract.Income;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

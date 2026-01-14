@@ -1,5 +1,4 @@
 using Maksby.Contract.Supplier;
-using Maksby.Services.DebtServices.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maksby.Controllers.SupplierController;

@@ -1,4 +1,4 @@
-using Maksby.Services.IncomeServices.Interfaces;
+using Maksby.Services.ClientServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

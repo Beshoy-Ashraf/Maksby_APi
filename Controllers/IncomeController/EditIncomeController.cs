@@ -1,4 +1,4 @@
-using Maksby.Contract;
+using Maksby.Contract.Income;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maksby.Controllers.IncomeController;

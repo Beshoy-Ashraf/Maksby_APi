@@ -1,10 +1,10 @@
 using Maksby.Contract.Client;
 using Maksby.Data.Context;
 using Maksby.Data.Models.Income;
-using Maksby.Services.IncomeServices.Interfaces;
+using Maksby.Services.ClientServices.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Maksby.Services.IncomeServices;
+namespace Maksby.Services.ClientServices;
 
 public class ClientService : IClientService
 {

@@ -1,11 +1,16 @@
 using Maksby.Data.Context;
-
+using Maksby.Services.ClientServices;
+using Maksby.Services.ClientServices.Interfaces;
+using Maksby.Services.DebtServices;
+using Maksby.Services.DebtServices.Interface;
 using Maksby.Services.EmployeeServices;
 using Maksby.Services.EmployeeServices.Interface;
 using Maksby.Services.ExpensesServices;
 using Maksby.Services.ExpensesServices.Interface;
 using Maksby.Services.IncomeServices;
 using Maksby.Services.IncomeServices.Interfaces;
+using Maksby.Services.ItemServices;
+using Maksby.Services.ItemServices.Interface;
 using Maksby.Services.ProductServices;
 using Maksby.Services.ProductServices.Interface;
 using Maksby.Services.SalaryServices;
@@ -25,6 +30,9 @@ public static class ServiceRegistrationExtensions
             services.AddScoped<IExpensesServices, ExpensesServices>();
             services.AddScoped<IEmployeeServices, EmployeeServices>();
             services.AddScoped<ISalaryServices, SalaryServices>();
+            services.AddScoped<IDebtServices, DebtServices>();
+            services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<IItemService, ItemService>();
 
             return services;
       }

@@ -88,6 +88,12 @@ public class IncomeServices : IIncomeServices
                 .Include(ci => ci.ClientInvoiceProducts)
                 .ThenInclude(p => p.Product)
                 .FirstOrDefaultAsync(x => x.Id == Id, cancellationToken) ?? throw new KeyNotFoundException($"Invoice with ID {Id} was not found.");
+            if (invoice.Client.Id != addInvoiceRequest.ClientId)
+            {
+                  var client = await _dbContext.Clients.FirstOrDefaultAsync(x => x.Id == addInvoiceRequest.ClientId, cancellationToken) ?? throw new KeyNotFoundException($"Client with ID {addInvoiceRequest.ClientId} was not found.");
+                  invoice.Client = client;
+            }
+
 
 
             var requestedProductIds = addInvoiceRequest.ClientInvoiceProductItem.Select(i => i.ProductId).ToList();
@@ -135,7 +141,9 @@ public class IncomeServices : IIncomeServices
             }
             invoice.ClientInvoiceProducts = invoiceProducts;
 
+            _dbContext.ClientInvoices.Update(invoice);
             await _dbContext.SaveChangesAsync(cancellationToken);
+
             return invoice.Id;
 
 
@@ -144,11 +152,7 @@ public class IncomeServices : IIncomeServices
 
       public async Task<Guid> Add(AddInvoiceRequest addInvoiceRequest, CancellationToken cancellationToken)
       {
-            var client = await _dbContext.Clients.FirstOrDefaultAsync(x => x.Id == addInvoiceRequest.ClientId, cancellationToken);
-
-            if (client is null)
-                  throw new Exception();
-
+            var client = await _dbContext.Clients.FirstOrDefaultAsync(x => x.Id == addInvoiceRequest.ClientId, cancellationToken) ?? throw new KeyNotFoundException($"Client with ID {addInvoiceRequest.ClientId} was not found.");
 
             var requestedProductIds = addInvoiceRequest.ClientInvoiceProductItem.Select(i => i.ProductId).ToList();
 

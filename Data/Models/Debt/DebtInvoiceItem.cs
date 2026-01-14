@@ -7,9 +7,9 @@ public class DebtInvoiceItem
       public Guid Id { get; set; }
       public double PricePerKilo { get; set; }
       public double QuantityPerKilo { get; set; }
-      public double Amount => QuantityPerKilo * PricePerKilo;
+      public double Amount { get; set; }
       public required DebtInvoice DebtInvoice { get; set; }
-      public required Item Items { get; set; }
+      public required Item Item { get; set; }
 
 
 

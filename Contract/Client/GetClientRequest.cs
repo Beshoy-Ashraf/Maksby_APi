@@ -1,5 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
-
 namespace Maksby.Contract.Client;
 
 public class GetClientRequest

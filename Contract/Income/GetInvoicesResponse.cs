@@ -1,5 +1,3 @@
-using Maksby.Data.Models.Income;
-
 namespace Maksby.Contract.Income;
 
 public class GetInvoicesResponse

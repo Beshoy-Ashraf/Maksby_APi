@@ -1,6 +1,6 @@
 using Maksby.Contract.Client;
 
-namespace Maksby.Services.IncomeServices.Interfaces;
+namespace Maksby.Services.ClientServices.Interfaces;
 
 public interface IClientService
 {

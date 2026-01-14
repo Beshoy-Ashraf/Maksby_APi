@@ -1,5 +1,4 @@
 using Maksby.Contract.Supplier;
-using Maksby.Services.DebtServices.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Maksby.Controllers.SupplierController;
@@ -7,7 +6,7 @@ namespace Maksby.Controllers.SupplierController;
 
 public partial class SupplierController : ControllerBase
 {
-      [HttpGet("{Id:guid}")]
+      [HttpGet("{id:guid}")]
 
       public async Task<GetSupplierRequest> GetSupplier([FromRoute] Guid id, CancellationToken cancellationToken)
       {

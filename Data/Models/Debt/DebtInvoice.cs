@@ -6,9 +6,17 @@ public class DebtInvoice
 
       public DateTime Date { get; set; } = DateTime.UtcNow;
       public double Amount { get; set; }
+      public Status Status { get; set; } = Status.NotPaid;
+
       public required Supplier Supplier { get; set; }
       public required Summary Summary { get; set; }
       public ICollection<DebtInvoiceItem> DebtInvoiceItems { get; set; } = [];
       public ICollection<DebtTransaction> DebtTransactions { get; set; } = [];
 
+}
+public enum Status
+{
+      NotPaid,
+      Pending,
+      Completed,
 }
