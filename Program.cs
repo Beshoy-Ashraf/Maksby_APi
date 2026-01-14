@@ -1,15 +1,6 @@
 using System.Reflection;
+using Maksby;
 using Maksby.Data.Context;
-using Maksby.Services.EmployeeServices;
-using Maksby.Services.EmployeeServices.Interface;
-using Maksby.Services.ExpensesServices;
-using Maksby.Services.ExpensesServices.Interface;
-using Maksby.Services.IncomeServices;
-using Maksby.Services.IncomeServices.Interfaces;
-using Maksby.Services.ProductServices;
-using Maksby.Services.ProductServices.Interface;
-using Maksby.Services.SalaryServices;
-using Maksby.Services.SalaryServices.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -19,18 +10,12 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseNpgsql(builder
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.RegisterBusinessServices();
 builder.Services.AddSwaggerGen(options =>
 {
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
-builder.Services.AddScoped<IIncomeServices, IncomeServices>();
-builder.Services.AddScoped<IClientService, ClientService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IExpensesServices, ExpensesServices>();
-builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
-builder.Services.AddScoped<ISalaryServices, SalaryServices>();
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
