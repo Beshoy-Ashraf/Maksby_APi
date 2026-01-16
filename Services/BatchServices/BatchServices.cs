@@ -179,6 +179,20 @@ public class BatchServices : IBatchServices
             return batches;
       }
 
+      public async Task<Guid> ChangeBatchStatus(Guid id, BatchStatus status, CancellationToken cancellationToken)
+      {
+            var batch = await _dbContext.Batches
+                  .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Batch with ID {id} was not found.");
+
+            batch.BatchStatus = status;
+            batch.UpdatedDate = DateTime.UtcNow;
+
+            _dbContext.Batches.Update(batch);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return batch.Id;
+      }
+
 
 
 }

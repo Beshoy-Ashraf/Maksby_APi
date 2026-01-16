@@ -31,6 +31,18 @@ public partial class BatchController : ControllerBase
                   return BadRequest("Can't get Batches");
             }
       }
+      [HttpGet("Product/{id:guid}")]
+      public async Task<ActionResult<List<GetBatchRequest>>> GetBatchProduct([FromRoute] Guid id, CancellationToken cancellationToken)
+      {
+            try
+            {
+                  return await _services.GetBatches(cancellationToken);
+            }
+            catch (Exception)
+            {
+                  return BadRequest("Can't get Batches");
+            }
+      }
 
 
 }
