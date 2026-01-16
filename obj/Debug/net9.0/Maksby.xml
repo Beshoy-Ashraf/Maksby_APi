@@ -52,5 +52,29 @@
         <member name="M:Maksby.Migrations.editAmountColum.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:Maksby.Migrations.editBatch">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editBatch.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editBatch.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editBatch.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Maksby.Migrations.editBatchdate">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editBatchdate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editBatchdate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editBatchdate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

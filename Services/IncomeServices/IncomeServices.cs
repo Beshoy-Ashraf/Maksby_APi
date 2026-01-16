@@ -109,11 +109,9 @@ public class IncomeServices : IIncomeServices
 
             foreach (var invoiceProduct in invoice.ClientInvoiceProducts)
             {
-                  var product = allProducts.FirstOrDefault(p => p.Id == invoiceProduct.Product.Id);
-                  if (product != null)
-                  {
-                        product.QuantityPerKilo += invoiceProduct.QuantityPerKilo;
-                  }
+                  var Products = await _dbContext.Products.FirstAsync(p => p.Id == invoiceProduct.Product.Id, cancellationToken);
+                  Products.QuantityPerKilo += invoiceProduct.QuantityPerKilo;
+
             }
 
 
@@ -145,9 +143,6 @@ public class IncomeServices : IIncomeServices
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return invoice.Id;
-
-
-
       }
 
       public async Task<Guid> Add(AddInvoiceRequest addInvoiceRequest, CancellationToken cancellationToken)
@@ -203,15 +198,8 @@ public class IncomeServices : IIncomeServices
             invoice.ClientInvoiceProducts = invoiceProducts;
 
 
-
-
-
             await _dbContext.ClientInvoices.AddAsync(invoice, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return invoice.Id;
-
-
-
-
       }
 }

@@ -96,10 +96,10 @@ public class DebtServices : IDebtServices
               .Where(i => requestedItemIds.Contains(i.Id))
               .ToListAsync(cancellationToken);
 
-            foreach (var returnItems in allItems)
+            foreach (var returnItems in invoice.DebtInvoiceItems)
             {
-                  var oldestInvoicesItems = invoice.DebtInvoiceItems.First(i => i.Id == returnItems.Id);
-                  returnItems.QuantityPerKilo += oldestInvoicesItems.QuantityPerKilo;
+                  var Items = await _dbContext.Items.FirstAsync(i => i.Id == returnItems.Item.Id, cancellationToken);
+                  Items.QuantityPerKilo += returnItems.QuantityPerKilo;
             }
 
             var items = allItems
@@ -149,7 +149,7 @@ public class DebtServices : IDebtServices
                       SupplierId = x.Supplier.Id,
                       InvoiceDate = x.Date,
                       TotalInvoiceAmount = x.Amount,
-                      Status = (Contract.Debt.Status)x.Status,
+                      Status = (Contract.Income.Status)x.Status,
                       ItemDetails = x.DebtInvoiceItems.Select(i => new ItemDetails
                       {
                             Id = i.Id,
@@ -178,7 +178,7 @@ public class DebtServices : IDebtServices
                   SupplierId = invoice.Supplier.Id,
                   InvoiceDate = invoice.Date,
                   TotalInvoiceAmount = invoice.Amount,
-                  Status = (Contract.Debt.Status)invoice.Status,
+                  Status = (Contract.Income.Status)invoice.Status,
                   ItemDetails = [.. invoice.DebtInvoiceItems.Select(i => new ItemDetails
                   {
                         Id = i.Id,

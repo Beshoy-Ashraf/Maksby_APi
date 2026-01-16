@@ -6,6 +6,7 @@ public class BatchItem
 {
       public Guid Id { get; set; }
       public double ItemQuantityPerKilo { get; set; }
+      public DateTime ModifyDate { get; set; }
 
       public required Batch Batch { get; set; }
 

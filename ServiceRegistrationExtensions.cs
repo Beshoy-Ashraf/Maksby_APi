@@ -1,5 +1,7 @@
 using Maksby.Data.Context;
 using Maksby.Data.Models;
+using Maksby.Services.BatchServices;
+using Maksby.Services.BatchServices.Interface;
 using Maksby.Services.ClientServices;
 using Maksby.Services.ClientServices.Interfaces;
 using Maksby.Services.DebtServices;
@@ -37,6 +39,7 @@ public static class ServiceRegistrationExtensions
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<ISummaryServices, SummaryServices>();
+            services.AddScoped<IBatchServices, BatchServices>();
 
             return services;
       }

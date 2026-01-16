@@ -1,4 +1,6 @@
 
+using Maksby.Contract.Income;
+
 namespace Maksby.Contract.Debt;
 
 public class GetSupplierInvoicesRequest
@@ -21,9 +23,4 @@ public class ItemDetails
       public double QuantityPerKilo { get; set; }
       public double Amount { get; set; }
 }
-public enum Status
-{
-      NotPaid,
-      Pending,
-      Completed,
-}
+

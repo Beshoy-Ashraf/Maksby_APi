@@ -3,6 +3,7 @@ using System;
 using Maksby.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Maksby.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260116104248_editBatch")]
+    partial class editBatch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -545,9 +548,6 @@ namespace Maksby.Migrations
 
                     b.Property<double>("ItemQuantityPerKilo")
                         .HasColumnType("double precision");
-
-                    b.Property<DateTime>("ModifyDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
