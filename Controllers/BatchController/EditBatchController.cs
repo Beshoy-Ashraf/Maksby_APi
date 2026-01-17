@@ -35,6 +35,20 @@ public partial class BatchController : ControllerBase
             }
 
       }
+      [HttpPut("{id:Guid}/record-production")]
+      public async Task<ActionResult<Guid>> RecordProduction([FromRoute] Guid id, [FromHeader] double QuantityPerKilo, CancellationToken cancellationToken)
+      {
+            try
+            {
+                  var result = await _services.RecordProduction(id, QuantityPerKilo, cancellationToken);
+                  return Ok(result);
+            }
+            catch (Exception e)
+            {
+                  return BadRequest($"Can't Change Batch Production{e}");
+            }
+
+      }
 
 
 }

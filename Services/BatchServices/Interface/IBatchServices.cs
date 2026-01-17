@@ -10,6 +10,9 @@ public interface IBatchServices
       Task<GetBatchRequest> GetBatch(Guid id, CancellationToken cancellationToken);
       Task<List<GetBatchRequest>> GetBatches(CancellationToken cancellationToken);
       Task<Guid> ChangeBatchStatus(Guid id, BatchStatus status, CancellationToken cancellationToken);
+      Task<Guid> AddItemsToBatch(Guid id, AddItemsToBachRequest addItemsToBachRequest, CancellationToken cancellationToken);
+      Task<Guid> RecordProduction(Guid id, Double QuantityPerKilo, CancellationToken cancellationToken);
+
 
 
 }

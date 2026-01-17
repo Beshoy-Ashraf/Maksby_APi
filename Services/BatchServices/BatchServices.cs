@@ -51,7 +51,6 @@ public class BatchServices : IBatchServices
             foreach (var ele in items)
             {
                   var currentItem = addBatchRequest.AddBatchItems.First(x => x.ItemId == ele.Id);
-                  ele.QuantityPerKilo -= currentItem.ItemQuantity;
                   var newBatchItem = new BatchItem
                   {
                         Id = Guid.NewGuid(),
@@ -60,6 +59,7 @@ public class BatchServices : IBatchServices
                         ModifyDate = DateTime.UtcNow,
                         Item = ele
                   };
+                  ele.QuantityPerKilo -= currentItem.ItemQuantity;
                   newBatchItems.Add(newBatchItem);
             }
             batch.BatchItems = newBatchItems;
@@ -110,7 +110,6 @@ public class BatchServices : IBatchServices
             foreach (var ele in items)
             {
                   var currentItem = addBatchRequest.AddBatchItems.First(x => x.ItemId == ele.Id);
-                  ele.QuantityPerKilo -= currentItem.ItemQuantity;
                   var newBatchItem = new BatchItem
                   {
                         Id = Guid.NewGuid(),
@@ -119,6 +118,7 @@ public class BatchServices : IBatchServices
                         ModifyDate = DateTime.UtcNow,
                         Item = ele
                   };
+                  ele.QuantityPerKilo -= currentItem.ItemQuantity;
                   newBatchItems.Add(newBatchItem);
             }
             batch.BatchItems = newBatchItems;
@@ -188,6 +188,56 @@ public class BatchServices : IBatchServices
             batch.UpdatedDate = DateTime.UtcNow;
 
             _dbContext.Batches.Update(batch);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return batch.Id;
+      }
+      public async Task<Guid> AddItemsToBatch(Guid id, AddItemsToBachRequest addItemsToBachRequest, CancellationToken cancellationToken)
+      {
+            var batch = await _dbContext.Batches
+                  .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Batch with ID {id} was not found.");
+            var requestedItem = addItemsToBachRequest.AddBatchItems.Select(x => x.ItemId);
+            var allItems = await _dbContext.Items
+                .Where(i => requestedItem.Contains(i.Id))
+                .ToListAsync(cancellationToken);
+
+            var items = allItems.Where(i => addItemsToBachRequest.AddBatchItems
+                                .Any(x => x.ItemId == i.Id && x.ItemQuantity <= i.QuantityPerKilo)
+
+            ).ToList();
+            if (items.Count != addItemsToBachRequest.AddBatchItems.Count) throw new Exception("items Not Found");
+
+
+            foreach (var ele in items)
+            {
+                  var currentItem = addItemsToBachRequest.AddBatchItems.First(x => x.ItemId == ele.Id);
+                  var newBatchItem = new BatchItem
+                  {
+                        Id = Guid.NewGuid(),
+                        ItemQuantityPerKilo = ele.QuantityPerKilo,
+                        Batch = batch,
+                        ModifyDate = DateTime.UtcNow,
+                        Item = ele
+                  };
+                  ele.QuantityPerKilo -= currentItem.ItemQuantity;
+                  batch.BatchItems.Add(newBatchItem);
+                  await _dbContext.BatchItems.AddAsync(newBatchItem, cancellationToken);
+            }
+
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return batch.Id;
+      }
+      public async Task<Guid> RecordProduction(Guid id, Double QuantityPerKilo, CancellationToken cancellationToken)
+      {
+            var batch = await _dbContext.Batches
+                 .Include(b => b.Product)
+                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Batch with ID {id} was not found.");
+
+            batch.Product.QuantityPerKilo += QuantityPerKilo;
+            batch.ProductQuantity += QuantityPerKilo;
+
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return batch.Id;

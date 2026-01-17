@@ -13,11 +13,25 @@ public partial class BatchController : ControllerBase
       {
             try
             {
-                  return await _services.AddBatch(addBatchRequest, cancellationToken);
+                  var result = await _services.AddBatch(addBatchRequest, cancellationToken);
+                  return Ok(result);
             }
             catch (Exception)
             {
                   return BadRequest("Can't Add Batch");
+            }
+      }
+      [HttpPost("{id:guid}/add-item")]
+      public async Task<ActionResult<Guid>> AddIBatch(Guid id, [FromBody] AddItemsToBachRequest addItemsToBatchRequest, CancellationToken cancellationToken)
+      {
+            try
+            {
+                  var result = await _services.AddItemsToBatch(id, addItemsToBatchRequest, cancellationToken);
+                  return Ok(result);
+            }
+            catch (Exception e)
+            {
+                  return BadRequest($"Can't Add Items{e}");
             }
       }
 
