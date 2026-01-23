@@ -5,7 +5,7 @@ namespace Maksby.Controllers.DebtController;
 
 public partial class DebtController : ControllerBase
 {
-      [HttpPut]
+      [HttpPut("{id:guid}")]
       public async Task<ActionResult<Guid>> EditSupplier([FromRoute] Guid id, [FromBody] AddSupplierInvoicesRequest addSupplierInvoicesRequest, CancellationToken cancellationToken)
       {
             try
@@ -16,11 +16,11 @@ public partial class DebtController : ControllerBase
             }
             catch (KeyNotFoundException e)
             {
-                  return NotFound(e.Message);
+                  return NotFound($"Not found,{e.Message}");
             }
             catch (Exception e)
             {
-                  return BadRequest(e.Message);
+                  return BadRequest($"can't edit{e.Message}");
             }
       }
 

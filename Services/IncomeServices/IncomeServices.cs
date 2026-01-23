@@ -94,7 +94,7 @@ public class IncomeServices : IIncomeServices
                   var client = await _dbContext.Clients.FirstOrDefaultAsync(x => x.Id == addInvoiceRequest.ClientId, cancellationToken) ?? throw new KeyNotFoundException($"Client with ID {addInvoiceRequest.ClientId} was not found.");
                   invoice.Client = client;
             }
-            if (invoice.OpenAmount != 0)
+            if (invoice.OpenAmount != invoice.Amount)
             {
                   throw new InvalidOperationException($"Invoice with ID {Id} has open amount should be returned.");
 
@@ -200,6 +200,7 @@ public class IncomeServices : IIncomeServices
 
                   };
                   invoice.Amount += invoiceProduct.TotalAmount;
+                  invoice.OpenAmount += invoiceProduct.TotalAmount;
                   invoiceProducts.Add(invoiceProduct);
             }
             invoice.ClientInvoiceProducts = invoiceProducts;

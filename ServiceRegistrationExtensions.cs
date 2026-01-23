@@ -22,6 +22,8 @@ using Maksby.Services.SalaryServices;
 using Maksby.Services.SalaryServices.Interface;
 using Maksby.Services.SummaryServices;
 using Maksby.Services.SummaryServices.Interface;
+using Maksby.Services.SupplierTransactionServices;
+using Maksby.Services.SupplierTransactionServices.Interface;
 
 namespace Maksby;
 
@@ -43,6 +45,7 @@ public static class ServiceRegistrationExtensions
             services.AddScoped<ISummaryServices, SummaryServices>();
             services.AddScoped<IBatchServices, BatchServices>();
             services.AddScoped<IClientTransactionServices, ClientTransactionServices>();
+            services.AddScoped<ISupplierTransactionServices, SupplierTransactionServices>();
 
             return services;
       }

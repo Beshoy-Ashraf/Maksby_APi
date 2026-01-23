@@ -58,6 +58,9 @@ public class DebtServices : IDebtServices
             {
                   var item = addSupplierInvoicesRequest.supplierInvoiceItems.First(x => x.ItemId == ele.Id);
                   supplierInvoice.Amount += item.QuantityPerKilo * ele.PricePerKilo;
+                  supplierInvoice.OpenAmount += item.QuantityPerKilo * ele.PricePerKilo;
+
+
                   ele.QuantityPerKilo -= item.QuantityPerKilo;
                   var invoiceItem = new DebtInvoiceItem
                   {
@@ -83,12 +86,17 @@ public class DebtServices : IDebtServices
                .Include(s => s.Supplier)
                .Include(si => si.DebtInvoiceItems)
                .ThenInclude(i => i.Item)
-               .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Invoice with ID {id} was not found.");
+               .FirstAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Invoice with ID {id} was not found.");
 
             if (invoice.Supplier.Id != addSupplierInvoicesRequest.SupplierId)
             {
                   var supplier = await _dbContext.Suppliers.FirstOrDefaultAsync(x => x.Id == addSupplierInvoicesRequest.SupplierId, cancellationToken) ?? throw new KeyNotFoundException($"Client with ID {addSupplierInvoicesRequest.supplierInvoiceItems} was not found.");
                   invoice.Supplier = supplier;
+            }
+            if (invoice.OpenAmount != invoice.Amount)
+            {
+                  throw new InvalidOperationException($"Invoice with ID {id} has open amount should be returned.");
+
             }
             var requestedItemIds = addSupplierInvoicesRequest.supplierInvoiceItems.Select(i => i.ItemId).ToList();
 
@@ -96,22 +104,21 @@ public class DebtServices : IDebtServices
               .Where(i => requestedItemIds.Contains(i.Id))
               .ToListAsync(cancellationToken);
 
+
+            var items = allItems
+               .Where(p => addSupplierInvoicesRequest.supplierInvoiceItems
+                   .Any(i => i.ItemId == p.Id && p.QuantityPerKilo > i.QuantityPerKilo))
+               .ToList();
             foreach (var returnItems in invoice.DebtInvoiceItems)
             {
                   var Items = await _dbContext.Items.FirstAsync(i => i.Id == returnItems.Item.Id, cancellationToken);
                   Items.QuantityPerKilo += returnItems.QuantityPerKilo;
             }
-
-            var items = allItems
-               .Where(p => addSupplierInvoicesRequest.supplierInvoiceItems
-                   .Any(i => i.ItemId == p.Id && i.QuantityPerKilo <= p.QuantityPerKilo))
-               .ToList();
-            List<DebtInvoiceItem> debtInvoiceItems = [];
-
+            invoice.DebtInvoiceItems.Clear();
+            invoice.Amount = 0;
             foreach (var ele in items)
             {
                   var item = addSupplierInvoicesRequest.supplierInvoiceItems.First(x => x.ItemId == ele.Id);
-                  invoice.Amount += item.QuantityPerKilo * ele.PricePerKilo;
                   ele.QuantityPerKilo -= item.QuantityPerKilo;
                   var invoiceItem = new DebtInvoiceItem
                   {
@@ -119,12 +126,12 @@ public class DebtServices : IDebtServices
                         QuantityPerKilo = item.QuantityPerKilo,
                         DebtInvoice = invoice,
                         Amount = ele.PricePerKilo * item.QuantityPerKilo,
-                        Item = ele
-
+                        Item = ele,
                   };
-                  debtInvoiceItems.Add(invoiceItem);
+                  invoice.Amount += invoiceItem.Amount;
+                  invoice.DebtInvoiceItems.Add(invoiceItem);
             }
-
+            invoice.OpenAmount = invoice.Amount;
 
             _dbContext.DebtInvoices.Update(invoice);
             await _dbContext.SaveChangesAsync(cancellationToken);
@@ -157,6 +164,7 @@ public class DebtServices : IDebtServices
                             ItemName = i.Item.Name,
                             PricePerKilo = i.PricePerKilo,
                             QuantityPerKilo = i.QuantityPerKilo,
+
                             Amount = i.PricePerKilo * i.QuantityPerKilo
                       }).ToList()
                 }
@@ -179,6 +187,7 @@ public class DebtServices : IDebtServices
                   InvoiceDate = invoice.Date,
                   TotalInvoiceAmount = invoice.Amount,
                   Status = (Contract.Income.Status)invoice.Status,
+                  OpenAmount = invoice.OpenAmount,
                   ItemDetails = [.. invoice.DebtInvoiceItems.Select(i => new ItemDetails
                   {
                         Id = i.Id,

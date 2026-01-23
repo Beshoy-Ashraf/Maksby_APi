@@ -2,7 +2,6 @@ namespace Maksby.Contract.Debt;
 
 public class AddSupplierInvoicesRequest
 {
-      public Guid Id { get; set; }
       public Guid SupplierId { get; set; }
       public DateTime InvoiceDate { get; set; }
 

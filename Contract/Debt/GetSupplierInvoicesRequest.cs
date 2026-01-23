@@ -8,6 +8,8 @@ public class GetSupplierInvoicesRequest
       public Guid InvoiceId { get; set; }
       public Guid SupplierId { get; set; }
       public DateTime InvoiceDate { get; set; }
+      public double OpenAmount { get; set; }
+
       public double TotalInvoiceAmount { get; set; }
       public Status Status { get; set; }
       public List<ItemDetails> ItemDetails { get; set; } = [];
