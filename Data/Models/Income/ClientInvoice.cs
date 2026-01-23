@@ -7,6 +7,7 @@ public class ClientInvoice
       public DateTime Date { get; set; } = DateTime.UtcNow;
 
       public double Amount { get; set; }
+      public double OpenAmount { get; set; } = 0;
       public Status Status { get; set; } = Status.NotPaid;
 
       public ICollection<ClientInvoiceProduct> ClientInvoiceProducts { get; set; } = [];

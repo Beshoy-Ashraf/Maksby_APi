@@ -76,5 +76,17 @@
         <member name="M:Maksby.Migrations.editBatchdate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:Maksby.Migrations.editincomeinvoices">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editincomeinvoices.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editincomeinvoices.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editincomeinvoices.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

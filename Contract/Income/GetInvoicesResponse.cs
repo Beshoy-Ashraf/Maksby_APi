@@ -6,6 +6,7 @@ public class GetInvoicesResponse
       public Guid ClientID { get; set; }
       public DateTime Date { get; set; }
       public Double Amount { get; set; }
+      public Double OpenAmount { get; set; }
       public Status Status { get; set; }
       public List<InvoiceItems> InvoiceItems { get; set; } = [];
 

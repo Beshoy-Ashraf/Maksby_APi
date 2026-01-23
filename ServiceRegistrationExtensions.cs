@@ -4,6 +4,8 @@ using Maksby.Services.BatchServices;
 using Maksby.Services.BatchServices.Interface;
 using Maksby.Services.ClientServices;
 using Maksby.Services.ClientServices.Interfaces;
+using Maksby.Services.ClientTransactionServices;
+using Maksby.Services.ClientTransactionServices.Interface;
 using Maksby.Services.DebtServices;
 using Maksby.Services.DebtServices.Interface;
 using Maksby.Services.EmployeeServices;
@@ -40,6 +42,7 @@ public static class ServiceRegistrationExtensions
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<ISummaryServices, SummaryServices>();
             services.AddScoped<IBatchServices, BatchServices>();
+            services.AddScoped<IClientTransactionServices, ClientTransactionServices>();
 
             return services;
       }

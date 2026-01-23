@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Maksby")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9184b56faa803d235c2d552d59d693d4affdbcc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+46af3deb77abd5d1d24c8f35629836c910651c3b")]
 [assembly: System.Reflection.AssemblyProductAttribute("Maksby")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Maksby")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
