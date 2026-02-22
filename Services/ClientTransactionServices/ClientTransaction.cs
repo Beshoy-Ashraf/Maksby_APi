@@ -40,6 +40,9 @@ public class ClientTransactionServices : IClientTransactionServices
                   ClientInvoice = invoice,
                   Amount = addClientTransactionRequest.Amount,
             };
+            var summary = await _dbContext.Summaries.FirstAsync(cancellationToken);
+            summary.ActualIncome += addClientTransactionRequest.Amount;
+
             invoice.OpenAmount -= addClientTransactionRequest.Amount;
             _dbContext.ClientInvoices.Update(invoice);
             await _dbContext.ClientTransactions.AddAsync(transaction, cancellationToken);
@@ -52,6 +55,8 @@ public class ClientTransactionServices : IClientTransactionServices
             .Include(i => i.ClientInvoice)
             .Include(c => c.Client)
             .FirstAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Transaction with ID {id} was not found.");
+            var summary = await _dbContext.Summaries.FirstAsync(cancellationToken);
+            summary.ActualIncome -= clientTransaction.Amount;
 
             clientTransaction.ClientInvoice.OpenAmount += clientTransaction.Amount;
             _dbContext.ClientInvoices.Update(clientTransaction.ClientInvoice);

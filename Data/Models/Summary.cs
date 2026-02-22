@@ -11,11 +11,14 @@ public class Summary
       public double InitialValue { get; set; }
       public double ActualIncome { get; set; }
       public double EstimatedIncome { get; set; }
-      public double ActualDebt { get; set; }
       public double EstimatedDebt { get; set; }
+      public double PaidForSuppliers { get; set; }
+      public double ActualDebt => EstimatedDebt - PaidForSuppliers;
+
       public double TotalSalaries { get; set; }
       public double TotalExpenses { get; set; }
-      public double Revenue { get; set; }
+      public double Revenue => InitialValue + EstimatedIncome - ActualDebt - TotalExpenses - TotalSalaries;
+      public double ActualMoney => InitialValue + ActualIncome - PaidForSuppliers - TotalExpenses - TotalSalaries;
 
       public ICollection<Salary> Salaries { get; set; } = [];
       public ICollection<Expense> Expenses { get; set; } = [];

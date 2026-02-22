@@ -3,6 +3,7 @@ using System;
 using Maksby.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Maksby.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20260128095917_editSummary")]
+    partial class editSummary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("DebtInvoices", (string)null);
+                    b.ToTable("DebtInvoices");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.DebtInvoiceItem", b =>
@@ -82,7 +85,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("DebtInvoiceItem", (string)null);
+                    b.ToTable("DebtInvoiceItem");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.DebtTransaction", b =>
@@ -109,7 +112,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("DebtTransactions", (string)null);
+                    b.ToTable("DebtTransactions");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.Item", b =>
@@ -143,7 +146,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Items", (string)null);
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.Supplier", b =>
@@ -171,7 +174,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Suppliers", (string)null);
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Employee.Employee", b =>
@@ -199,7 +202,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Employee.Salary", b =>
@@ -270,7 +273,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("SummaryId");
 
-                    b.ToTable("Expenses", (string)null);
+                    b.ToTable("Expenses");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.Client", b =>
@@ -297,7 +300,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients", (string)null);
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.ClientInvoice", b =>
@@ -330,7 +333,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("SummaryId");
 
-                    b.ToTable("ClientInvoices", (string)null);
+                    b.ToTable("ClientInvoices");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.ClientInvoiceProduct", b =>
@@ -357,7 +360,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ClientInvoiceProducts", (string)null);
+                    b.ToTable("ClientInvoiceProducts");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.ClientTransaction", b =>
@@ -384,7 +387,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("ClientInvoiceId");
 
-                    b.ToTable("ClientTransactions", (string)null);
+                    b.ToTable("ClientTransactions");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Income.Product", b =>
@@ -418,7 +421,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Summary", b =>
@@ -453,7 +456,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Summaries", (string)null);
+                    b.ToTable("Summaries");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.User.User", b =>
@@ -500,7 +503,7 @@ namespace Maksby.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.batch.Batch", b =>
@@ -531,7 +534,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Batches", (string)null);
+                    b.ToTable("Batches");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.batch.BatchItem", b =>
@@ -558,7 +561,7 @@ namespace Maksby.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("BatchItems", (string)null);
+                    b.ToTable("BatchItems");
                 });
 
             modelBuilder.Entity("Maksby.Data.Models.Debt.DebtInvoice", b =>

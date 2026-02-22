@@ -37,12 +37,7 @@ public class DebtServices : IDebtServices
             if (items.Count != addSupplierInvoicesRequest.supplierInvoiceItems.Count)
                   throw new Exception("items invoice Quantity less than exactly items in inventory");
 
-            var summary = await _dbContext.Summaries.FirstOrDefaultAsync(cancellationToken);
-            if (summary == null)
-            {
-                  summary = new Summary();
-                  await _dbContext.Summaries.AddAsync(summary, cancellationToken);
-            }
+            var summary = await _dbContext.Summaries.FirstAsync(cancellationToken);
 
             var supplierInvoice = new DebtInvoice
             {
@@ -71,7 +66,7 @@ public class DebtServices : IDebtServices
                   };
                   debtInvoiceItems.Add(invoiceItem);
             }
-
+            summary.EstimatedDebt += supplierInvoice.Amount;
             supplierInvoice.DebtInvoiceItems = debtInvoiceItems;
 
             await _dbContext.DebtInvoices.AddAsync(supplierInvoice, cancellationToken);
@@ -114,6 +109,10 @@ public class DebtServices : IDebtServices
                   var Items = await _dbContext.Items.FirstAsync(i => i.Id == returnItems.Item.Id, cancellationToken);
                   Items.QuantityPerKilo += returnItems.QuantityPerKilo;
             }
+            var summary = await _dbContext.Summaries.FirstAsync(cancellationToken);
+            summary.EstimatedDebt -= invoice.Amount;
+
+
             invoice.DebtInvoiceItems.Clear();
             invoice.Amount = 0;
             foreach (var ele in items)
@@ -132,7 +131,7 @@ public class DebtServices : IDebtServices
                   invoice.DebtInvoiceItems.Add(invoiceItem);
             }
             invoice.OpenAmount = invoice.Amount;
-
+            summary.EstimatedDebt += invoice.Amount;
             _dbContext.DebtInvoices.Update(invoice);
             await _dbContext.SaveChangesAsync(cancellationToken);
 

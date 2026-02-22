@@ -24,6 +24,8 @@ using Maksby.Services.SummaryServices;
 using Maksby.Services.SummaryServices.Interface;
 using Maksby.Services.SupplierTransactionServices;
 using Maksby.Services.SupplierTransactionServices.Interface;
+using Maksby.Services.TokenService;
+using Maksby.Services.TokenService.Interface;
 
 namespace Maksby;
 
@@ -46,6 +48,8 @@ public static class ServiceRegistrationExtensions
             services.AddScoped<IBatchServices, BatchServices>();
             services.AddScoped<IClientTransactionServices, ClientTransactionServices>();
             services.AddScoped<ISupplierTransactionServices, SupplierTransactionServices>();
+            services.AddScoped<ITokenService, TokenService>();
+
 
             return services;
       }

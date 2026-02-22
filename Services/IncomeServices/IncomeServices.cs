@@ -123,7 +123,8 @@ public class IncomeServices : IIncomeServices
 
             if (products.Count != addInvoiceRequest.ClientInvoiceProductItem.Count)
                   throw new Exception();
-
+            var summary = _dbContext.Summaries.First();
+            summary.EstimatedIncome -= invoice.Amount;
             invoice.Amount = 0;
 
             var invoiceProducts = new List<ClientInvoiceProduct>();
@@ -145,6 +146,7 @@ public class IncomeServices : IIncomeServices
             }
             invoice.ClientInvoiceProducts = invoiceProducts;
 
+            summary.EstimatedIncome += invoice.Amount;
 
             _dbContext.ClientInvoices.Update(invoice);
             await _dbContext.SaveChangesAsync(cancellationToken);
@@ -204,6 +206,7 @@ public class IncomeServices : IIncomeServices
                   invoiceProducts.Add(invoiceProduct);
             }
             invoice.ClientInvoiceProducts = invoiceProducts;
+            summary.EstimatedIncome += invoice.Amount;
 
 
             await _dbContext.ClientInvoices.AddAsync(invoice, cancellationToken);

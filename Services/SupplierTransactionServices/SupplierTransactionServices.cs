@@ -29,7 +29,7 @@ public class SupplierTransactionServices : ISupplierTransactionServices
               ?? throw new KeyNotFoundException($"Invoice with ID {addSupplierTransactionRequest.InvoiceId} was not found.");
             if (invoice.OpenAmount - addSupplierTransactionRequest.Amount < 0)
                   throw new InvalidOperationException($"Invoice with ID {addSupplierTransactionRequest.InvoiceId} has open amount less than payment.");
-
+            var summary = await _dbContext.Summaries.FirstAsync(cancellationToken);
             var transaction = new DebtTransaction
             {
                   Supplier = Supplier,
@@ -37,6 +37,7 @@ public class SupplierTransactionServices : ISupplierTransactionServices
                   Amount = addSupplierTransactionRequest.Amount,
             };
             invoice.OpenAmount -= addSupplierTransactionRequest.Amount;
+            summary.PaidForSuppliers += addSupplierTransactionRequest.Amount;
             _dbContext.DebtInvoices.Update(invoice);
             await _dbContext.DebtTransactions.AddAsync(transaction, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
@@ -60,6 +61,8 @@ public class SupplierTransactionServices : ISupplierTransactionServices
            .Include(i => i.DebtInvoice)
            .Include(c => c.Supplier)
            .FirstAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Transaction with ID {id} was not found.");
+            var summary = await _dbContext.Summaries.FirstAsync(cancellationToken);
+            summary.PaidForSuppliers -= SupplierTransaction.Amount;
 
             var response = new GetSupplierTransactionRequest
             {

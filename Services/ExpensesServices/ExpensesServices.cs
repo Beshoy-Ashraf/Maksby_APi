@@ -35,7 +35,9 @@ public class ExpensesServices : IExpensesServices
                   Summary = Summary
 
             };
+            var summary = await _dbContext.Summaries.FirstAsync(cancellationToken);
 
+            summary.TotalExpenses += addExpenseRequest.Amount;
             await _dbContext.Expenses.AddAsync(Expense, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return Expense.Id;
@@ -51,6 +53,7 @@ public class ExpensesServices : IExpensesServices
             Expense.Description = addExpenseRequest.Description;
             Expense.Amount = addExpenseRequest.Amount;
             Expense.UpdatedDate = DateTime.UtcNow;
+
 
             _dbContext.Expenses.Update(Expense);
             await _dbContext.SaveChangesAsync(cancellationToken);

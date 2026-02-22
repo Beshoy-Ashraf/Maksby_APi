@@ -125,3 +125,11 @@
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/ref/Maksby.dll
 /home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Maksby.xml
 /home/besho/API/Maksby/Maksby/obj/Debug/net9.0/Maksby.xml
+/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.dll
+/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
+/home/besho/API/Maksby/Maksby/bin/Debug/net9.0/System.IdentityModel.Tokens.Jwt.dll

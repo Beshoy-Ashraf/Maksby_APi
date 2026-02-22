@@ -100,5 +100,29 @@
         <member name="M:Maksby.Migrations.editdebtinvoices.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:Maksby.Migrations.editSummary">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editSummary.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editSummary.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.editSummary.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Maksby.Migrations.CreateUsersTable">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.CreateUsersTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.CreateUsersTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Maksby.Migrations.CreateUsersTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

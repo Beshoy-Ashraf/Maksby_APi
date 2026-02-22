@@ -34,6 +34,7 @@ public class SalaryServices : ISalaryServices
                   Summary = summary,
                   Employee = employee
             };
+            summary.TotalSalaries += NewSalary.NetSalary;
             await _dbContext.Salaries.AddAsync(NewSalary, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return NewSalary.Id;
@@ -44,15 +45,14 @@ public class SalaryServices : ISalaryServices
             var summary = await _dbContext.Summaries.FirstOrDefaultAsync(cancellationToken) ?? throw new KeyNotFoundException($"summary Not Found");
             var employee = await _dbContext.Employees.FirstOrDefaultAsync(x => x.Id == addSalaryRequest.EmployeeId, cancellationToken) ?? throw new KeyNotFoundException($"Employee with {addSalaryRequest.EmployeeId} not found");
             var salary = await _dbContext.Salaries.FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ?? throw new KeyNotFoundException($"Salary with {id} not found");
-
+            summary.TotalSalaries -= salary.NetSalary;
             salary.BasicSalary = addSalaryRequest.BasicSalary;
-            salary.NetSalary = addSalaryRequest.BasicSalary + addSalaryRequest.OverTime - addSalaryRequest.Deduction;
             salary.OverTime = addSalaryRequest.OverTime;
             salary.Deduction = addSalaryRequest.Deduction;
+            salary.NetSalary = addSalaryRequest.BasicSalary + addSalaryRequest.OverTime - addSalaryRequest.Deduction;
 
-            salary.Summary = summary;
+            summary.TotalSalaries += salary.NetSalary;
             salary.Employee = employee;
-
             _dbContext.Salaries.Update(salary);
             await _dbContext.SaveChangesAsync(cancellationToken);
 

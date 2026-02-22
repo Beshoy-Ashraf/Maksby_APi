@@ -1,4 +1,5 @@
 using Maksby.Contract.SupplierTransactions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -19,6 +20,8 @@ public partial class SupplierTransactionController : ControllerBase
             }
       }
       [HttpGet]
+      [Authorize]
+
       public async Task<ActionResult<List<GetSupplierTransactionRequest>>> GetSuppliersTransactions(CancellationToken cancellationToken)
       {
             try
